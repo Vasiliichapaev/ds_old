@@ -7,6 +7,79 @@ html, div{
 }
 
 body{
-    background-color: slategray;
+    background-color: white;
+    font-family: cursive;
 }
 
+
+.board{
+    position: absolute;
+    left: 150px;
+    margin-bottom: 50px;
+}
+
+.table{
+    background-color: green;
+    margin-top: 30px;
+    box-shadow: 5px 5px ;
+    border-right:solid 1px;
+    border-color: green;  
+    display: table; 
+}
+
+.row{
+    display: flex;
+}
+
+.cell{
+    background-color: rgb(255, 247, 232);
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    font-size: 20px;
+    display: flex;
+    margin-left: 1px;
+    margin-bottom: 1px;
+
+}
+
+.player_name{
+    background-color: rgb(255, 247, 232);
+    width: 110px;
+    height: 30px;
+    font-size: 20px;
+    margin-left: 1px;
+    margin-bottom: 1px;
+    padding-left: 5px;
+}
+
+.wr{
+    background-color: rgb(255, 247, 232);
+    width: 90px;
+    height: 30px;
+    font-size: 20px;
+    margin-left: 1px;
+    margin-bottom: 1px;
+    padding-left: 5px;
+    display: flex;
+}
+
+.head{
+    text-align: center;
+    font-size: 20px;
+    color: white;
+}
+
+.win{
+    color: darkgreen;
+    margin: auto;
+}
+
+.lose{
+    color: red;
+    margin: auto;
+}
+
+.dt{
+    margin: auto;
+}
