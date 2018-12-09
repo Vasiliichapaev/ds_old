@@ -26,7 +26,7 @@ function player_data(player){
   var request = new XMLHttpRequest();
   request.open('GET', 'https://api.opendota.com/api/players/' + player + '/matches', false);
   request.send();
-  games = JSON.parse(request.responseText).slice(0, 1000)
+  games = JSON.parse(request.responseText)
   lst = []
   console.log(player, games.filter(tm => tm["start_time"]>=1538946000 && tm["start_time"] < 1538946000 + 86400))
 
@@ -72,7 +72,7 @@ for (g=0; g<6; g++){
       month_index = 12 + month_index
       year = year - 1
     }
-    head.innerHTML = months[month_index]
+    head.innerHTML = months[month_index] + " " + year
     days = new Date(year, month_index, 1).daysInMonth();
 
     table.appendChild(head)
