@@ -53,13 +53,13 @@ function win_loose(i, games){
 
 now = new Date();
 month = now.getMonth()
-year = now.getFullYear()
 day = now.getDate()
 day_seconds = 86400
 
 board = document.querySelector(".board")
 
-for (g=0; g<12; g++){
+for (g=0; g<100; g++){
+  year = now.getFullYear()
 
   for (player in players) {
     players[player]["w"] = 0
@@ -74,14 +74,17 @@ for (g=0; g<12; g++){
     head =  document.createElement('div')
     head.classList.add("head")
 
-    month_index = month - g
-    if (month_index < 0) {
-      month_index = 12 + month_index
-      year = year - 1
+    if (g<=month){  
+      month_index = month - g
+    }else{
+      month_index = 11 - Math.abs(g - month - 1) % 12
+      year = year - (g - (g - month - 1) % 12)/12
     }
+ 
+
 
     head.innerHTML = months[month_index] + " " + year
-    days = new Date(year, month_index, 1).daysInMonth();
+    days = new Date(year, month_index).daysInMonth();
 
     table.appendChild(head)
 
