@@ -93,7 +93,12 @@ for (g=0; g<6; g++){
     for (key in players) {
     cell = document.createElement('div')
     cell.classList.add("player_name")
-    cell.innerHTML = players[key]["name"]
+    
+    pn = document.createElement('div')
+    pn.classList.add("pn")
+    pn.innerHTML = players[key]["name"]
+    cell.appendChild(pn)
+
     column.appendChild(cell)
     }
 
