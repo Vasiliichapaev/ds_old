@@ -242,9 +242,14 @@ for (g=0; g<6; g++){
 
       if (players[player]["w"]){
         lose = document.createElement('div')
-        lose.classList.add("lose")
+        
         cell.appendChild(lose)
         wr = players[player]["w"] / (players[player]["l"] + players[player]["w"])
+        if (wr < 0.5){
+          lose.classList.add("lose")
+        }else{
+          lose.classList.add("win")
+        }
         
         lose.innerHTML = wr.toFixed(2) 
       }
