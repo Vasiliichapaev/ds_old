@@ -93,7 +93,7 @@ for (g=0; g<6; g++){
     column.appendChild(cell)
     }
 
-    month_start = new Date(year, month_index, 1)/1000
+    month_start = new Date(year, month_index, 1)/1000 
     for (i=0; i<days; i++){
 
       column = document.createElement('div')
