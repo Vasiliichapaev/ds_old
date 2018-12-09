@@ -12,9 +12,18 @@ var players = {
   120491980: {"name": "BloOdTerrOr"}
 };
 
-
-
-months = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+var months = ["Январь", 
+              "Февраль", 
+              "Март", 
+              "Апрель", 
+              "Май", 
+              "Июнь", 
+              "Июль", 
+              "Август", 
+              "Сентябрь", 
+              "Октябрь", 
+              "Ноябрь", 
+              "Декабрь"];
 
 for (player in players) {
   players[player]["games"] = player_data(player)
@@ -28,8 +37,6 @@ function player_data(player){
   request.send();
   games = JSON.parse(request.responseText)
   lst = []
-  console.log(player, games.filter(tm => tm["start_time"]>=1538946000 && tm["start_time"] < 1538946000 + 86400))
-
   for (i=0; i<games.length; i++){
     lst.push([games[i]["start_time"], win_loose(i, games)])
   }
@@ -52,7 +59,7 @@ day_seconds = 86400
 
 board = document.querySelector(".board")
 
-for (g=0; g<6; g++){
+for (g=0; g<12; g++){
 
   for (player in players) {
     players[player]["w"] = 0
@@ -67,11 +74,12 @@ for (g=0; g<6; g++){
     head =  document.createElement('div')
     head.classList.add("head")
 
-    month_index = month-g
-    if (month_index<0) {
+    month_index = month - g
+    if (month_index < 0) {
       month_index = 12 + month_index
       year = year - 1
     }
+
     head.innerHTML = months[month_index] + " " + year
     days = new Date(year, month_index, 1).daysInMonth();
 
