@@ -12,6 +12,8 @@ var players = {
   120491980: {"name": "BloOdTerrOr"}
 };
 
+
+
 months = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
 
 for (player in players) {
@@ -26,6 +28,8 @@ function player_data(player){
   request.send();
   games = JSON.parse(request.responseText).slice(0, 1000)
   lst = []
+  console.log(player, games.filter(tm => tm["start_time"]>=1538946000 && tm["start_time"] < 1538946000 + 86400))
+
   for (i=0; i<games.length; i++){
     lst.push([games[i]["start_time"], win_loose(i, games)])
   }
