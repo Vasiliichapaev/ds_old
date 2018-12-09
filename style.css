@@ -9,6 +9,8 @@ html, div{
 body{
     background-color: white;
     font-family: cursive;
+    background: url(rak.jpg) no-repeat;
+    background-size: 100%;
 }
 
 

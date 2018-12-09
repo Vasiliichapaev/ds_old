@@ -114,7 +114,7 @@ for (g=0; g<6; g++){
       day_end = day_start + day_seconds
 
       for (player in players){
-        players[player]["day"] = players[player]["games"].filter(tm => tm[0]>=day_start && tm[0] <= day_end)
+        players[player]["day"] = players[player]["games"].filter(tm => tm[0]>=day_start && tm[0] < day_end)
       }
 
       for (player in players) {
