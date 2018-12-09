@@ -25,7 +25,6 @@ function player_data(player){
   request.open('GET', 'https://api.opendota.com/api/players/' + player + '/matches', false);
   request.send();
   games = JSON.parse(request.responseText).slice(0, 1000)
-  console.log(games.filter(x => x["start_time"]>= 1538427600 && x["start_time"]<= 1538427600+86400), player)
   lst = []
   for (i=0; i<games.length; i++){
     lst.push([games[i]["start_time"], win_loose(i, games)])
