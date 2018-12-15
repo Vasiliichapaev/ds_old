@@ -8,26 +8,63 @@ html, div{
 
 body{
     background-color: white;
-    background: url(rak.jpg) no-repeat;
+    /* background: url(rak.jpg) no-repeat; */
     background-size: 100%;
     background-attachment: fixed;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 30px;
 }
-
 
 .board{
     position: absolute;
-    left: 100px;
-    margin-bottom: 50px;
+    left: 50px;
+    top: 50px;
 }
 
-.table{
-    background-color: green;
-    margin-top: 30px;
+.year_table{
+    border:solid blueviolet 2px;
+    margin-bottom: 20px;
+    padding-right: 20px;
+    width: 1302px;
+    border-radius: 15px 15px 0 0;
+}
+
+.minimize{
+    border-radius: 15px;
+}
+
+
+
+.year_head{
+    height: 30px;
+    text-align: center;
+    font-size: 25px;
+    color: blueviolet;
+    font-weight: bold;
+    display: flex;
+
+}
+
+.year_minimize{
+    width: 10%;
+    font-size: 15px;
+    text-align: left;
+    padding: 2px;
+    margin-left: 10px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.year_number{
+    width: 80%
+}
+
+.month_table{
+    background-color: #1e5bab;
+    margin-bottom: 30px;
+    margin-left: 30px;
     box-shadow: 5px 5px ;
     border-right:solid 1px;
-    border-color: green;  
+    border-color: #1e5bab;  
     display: table; 
 }
 
@@ -58,9 +95,16 @@ body{
     display: flex;
 }
 
-.pn{
-    margin-top: auto;
+.player_name_head{
+    margin: auto;
+    cursor: pointer;
 }
+
+.player_name_container{
+    margin-top: 5px;
+    cursor: pointer;
+}
+
 
 .wr{
     background-color: rgb(255, 247, 232);
@@ -73,10 +117,31 @@ body{
     display: flex;
 }
 
-.head{
+.wr_container{
+    margin: auto;
+}
+
+
+
+.border_left{
+    border-left: solid 1px #1e5bab;
+}
+
+.border_right{
+    border-right: solid 1px #1e5bab;
+}
+
+.border_bottom{
+    border-bottom: solid 1px #1e5bab;
+}
+
+
+.month_head{
+    height: 25px;
     text-align: center;
     font-size: 20px;
     color: white;
+    font-weight: bold;
 }
 
 .win{
@@ -84,11 +149,19 @@ body{
     margin: auto;
 }
 
-.lose{
+.loose{
     color: red;
     margin: auto;
 }
 
-.dt{
+.day_number{
     margin: auto;
+}
+
+.not_calc{
+    color: darkgrey;
+}
+
+.minimize .month_table{
+    display: none;
 }
