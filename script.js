@@ -35,7 +35,7 @@ now_month = now.getMonth()
 day_seconds = 86400
 
 board = document.querySelector(".board")
-for (year=now_year; year>=2012; year--){
+for (year=now_year; year>=2014; year--){
   year_table = document.createElement('div')
   year_table.classList.add("year_table")
   if (year != now_year) year_table.classList.add("minimize")
@@ -45,15 +45,15 @@ for (year=now_year; year>=2012; year--){
   year_head = document.createElement('div')
   year_head.classList.add("year_head")
 
-  year_minimize = document.createElement('div')
-  year_minimize.classList.add("year_minimize")
-  if (year != now_year) {
-    year_minimize.innerHTML = "Развернуть"
-  } else {
-    year_minimize.innerHTML = "Свернуть"
-  }
-  year_minimize.addEventListener('click', mini_year)
-  year_head.appendChild(year_minimize)
+  // year_minimize = document.createElement('div')
+  // year_minimize.classList.add("year_minimize")
+  // if (year != now_year) {
+  //   year_minimize.innerHTML = "Развернуть"
+  // } else {
+  //   year_minimize.innerHTML = "Свернуть"
+  // }
+  year_head.addEventListener('click', mini_year)
+  // year_head.appendChild(year_minimize)
 
   year_number = document.createElement('div')
   year_number.classList.add("year_number")
@@ -392,13 +392,11 @@ function all_players(event){
 }
 
 function mini_year(event){
-  year_table = this.parentElement.parentElement
+  year_table = this.parentElement
   if (year_table.classList.contains("minimize")){
     year_table.classList.remove("minimize")
-    year_table.children[0].children[0].innerHTML = "Свернуть"
   }else{
     year_table.classList.add("minimize")
-    year_table.children[0].children[0].innerHTML = "Развернуть"
   }
 
 }
