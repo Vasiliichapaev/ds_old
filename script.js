@@ -4,12 +4,12 @@ Date.prototype.daysInMonth = function() {
 };
 
 var players = {
-  "Doctaaar": {"id": 254920273},
-  "Neeeeeerf": {"id": 102756891},
-  "JohnGalt": {"id": 41528404},
-  "Megabit": {"id": 84502939},
-  "Alexfov": {"id": 313885294},
-  "BloOdTerrOr": {"id": 120491980}
+  "Doctaaar": {"id": [254920273, 117990545]},
+  "Neeeeeerf": {"id": [102756891]},
+  "JohnGalt": {"id": [41528404]},
+  "Megabit": {"id": [84502939]},
+  "Alexfov": {"id": [313885294]},
+  "BloOdTerrOr": {"id": [120491980]}
 };
 
 
@@ -191,13 +191,16 @@ for (year=now_year; year>=2012; year--){
 
 function players_data(){
   for (player in players){
-    var request = new XMLHttpRequest();
-    request.open('GET', 'https://api.opendota.com/api/players/' + players[player]["id"] + '/matches', false);
-    request.send();
-    games = JSON.parse(request.responseText)
     lst = []
-    for (i in games){
-      lst.push([games[i]["start_time"], win_loose(i, games)])
+    for (g in players[player]["id"]){
+      var request = new XMLHttpRequest();
+      request.open('GET', 'https://api.opendota.com/api/players/' + players[player]["id"][g] + '/matches', false);
+      request.send();
+      games = JSON.parse(request.responseText)
+      
+      for (i in games){
+        lst.push([games[i]["start_time"], win_loose(i, games)])
+      }
     }
     players[player]["games"] = lst
   }
