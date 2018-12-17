@@ -187,8 +187,6 @@ for (year=now_year; year>=2012; year--){
   }
 }
 
-
-
 function players_data(){
   for (player in players){
     lst = []
@@ -373,15 +371,24 @@ function toggle(event){
 
 function all_players(event){
   month_table = this.parentElement.parentElement.parentElement.parentElement
+  clmn = this.parentElement.parentElement
   this.attributes["players"] = []
-  for (player in players){
-    this.attributes["players"].push(player)
+
+  if (this.classList.contains("not_calc")){
+    this.classList.remove("not_calc")
+    for (player in players){
+      this.attributes["players"].push(player)
+    }
+    for (i=1; i<clmn.children.length; i++){
+      clmn.children[i].children[0].classList.remove("not_calc")
+    }
+  }else{
+    this.classList.add("not_calc")
+    for (i=1; i<clmn.children.length; i++){
+      clmn.children[i].children[0].classList.add("not_calc")
+    }
   }
   calculation(month_table)
-  clmn = this.parentElement.parentElement
-  for (i=0; i<clmn.children.length; i++){
-    clmn.children[i].children[0].classList.remove("not_calc")
-  }
 }
 
 function mini_year(event){
