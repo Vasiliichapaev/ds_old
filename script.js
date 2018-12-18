@@ -27,31 +27,30 @@ var months = ["Январь",
               "Декабрь"];
 
 
-players_data()
+players_data();
 
 now = new Date();
-now_year = now.getFullYear()
-now_month = now.getMonth()
-day_seconds = 86400
+now_year = now.getFullYear();
+now_month = now.getMonth();
+day_seconds = 86400;
 
-board = document.querySelector(".board")
+board = document.querySelector(".board");
 for (year=now_year; year>=2012; year--){
-  year_table = document.createElement('div')
-  year_table.classList.add("year_table")
-  if (year != now_year) year_table.classList.add("minimize")
-  board.appendChild(year_table)
+  year_table = document.createElement('div');
+  year_table.classList.add("year_table");
+  if (year != now_year) year_table.classList.add("minimize");
+  board.appendChild(year_table);
 
-  year_head = document.createElement('div')
-  year_head.classList.add("year_head")
-  year_head.addEventListener('click', mini_year)
+  year_head = document.createElement('div');
+  year_head.classList.add("year_head");
+  year_head.addEventListener('click', mini_year);
 
-  year_number = document.createElement('div')
-  year_number.classList.add("year_number")
-  year_number.innerHTML = year
-  year_head.appendChild(year_number)
+  year_number = document.createElement('div');
+  year_number.classList.add("year_number");
+  year_number.innerHTML = year;
+  year_head.appendChild(year_number);
 
-  year_table.appendChild(year_head)
-
+  year_table.appendChild(year_head);
 
   year_end = 11;
   if (now_month < 11){year_end = now_month}
