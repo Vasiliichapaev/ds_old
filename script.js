@@ -26,17 +26,21 @@ var months = ["Январь",
               "Ноябрь", 
               "Декабрь"];
 
+var ranked_calc = true;
+var unranked_calc = true;
 
 players_data();
 
-now = new Date();
-now_year = now.getFullYear();
-now_month = now.getMonth();
-day_seconds = 86400;
+var now = new Date();
+var now_year = now.getFullYear();
+var now_month = now.getMonth();
+var day_seconds = 86400;
 
-board = document.querySelector(".board");
-for (year=now_year; year>=2012; year--){
-  year_table = document.createElement('div');
+var board = document.querySelector(".board");
+for (var year=now_year; year>=2012; year--){
+
+  var year_table = document.createElement('div');
+
   year_table.classList.add("year_table");
   if (year != now_year) year_table.classList.add("minimize");
   board.appendChild(year_table);
@@ -53,7 +57,7 @@ for (year=now_year; year>=2012; year--){
   year_table.appendChild(year_head);
 
   year_end = 11;
-  if (now_month < 11){year_end = now_month}
+  if (now_month < 11)year_end = now_month;
 
   for (month=year_end; month>=0; month--){
     month_table = document.createElement('div')
@@ -85,6 +89,20 @@ for (year=now_year; year>=2012; year--){
       player_name_head.attributes["players"].push(player)
     }
     cell.appendChild(player_name_head)
+
+    var ranked = document.createElement('div');
+    ranked.classList.add("ranked")
+    ranked.innerHTML = "Р"
+    ranked.addEventListener('click', ranked_games)
+    cell.appendChild(ranked)
+
+    var unranked = document.createElement('div');
+    unranked.classList.add("ranked")
+    unranked.innerHTML = "О"
+    unranked.addEventListener('click', unranked_games)
+    cell.appendChild(unranked)
+
+
 
     column.appendChild(cell)
     row.appendChild(column)
@@ -196,7 +214,7 @@ function players_data(){
       games = JSON.parse(request.responseText)
       
       for (i in games){
-        lst.push([games[i]["start_time"], win_loose(i, games)])
+        lst.push([games[i]["start_time"], win_loose(i, games), ranked(i, games)])
       }
     }
     players[player]["games"] = lst
@@ -204,11 +222,15 @@ function players_data(){
 };
 
 function win_loose(i, games){
-  if (games[i]["radiant_win"] && games[i]["player_slot"] < 6) return true
-  if (!games[i]["radiant_win"] && games[i]["player_slot"] > 6) return true
-  return false
-}
+  if (games[i]["radiant_win"] && games[i]["player_slot"] < 6) return true;
+  if (!games[i]["radiant_win"] && games[i]["player_slot"] > 6) return true;
+  return false;
+};
 
+function ranked(i, games){
+  if (games[i]["lobby_type"] == 7) return true;
+  return false;
+};
 
 function calculation(month_table) {
   for (player in players){
@@ -229,7 +251,15 @@ function calculation(month_table) {
     day_end = day_start + day_seconds
 
     for (player in players){
-      players[player]["day"] = players[player]["games"].filter(tm => tm[0]>=day_start && tm[0] < day_end)
+      if (ranked_calc && unranked_calc){
+        players[player]["day"] = players[player]["games"].filter(tm => tm[0]>=day_start && tm[0] < day_end)
+      }else if (!ranked_calc && unranked_calc){
+        players[player]["day"] = players[player]["games"].filter(tm => tm[0]>=day_start && tm[0] < day_end && !tm[2])
+      }else if (ranked_calc && !unranked_calc){
+        players[player]["day"] = players[player]["games"].filter(tm => tm[0]>=day_start && tm[0] < day_end && tm[2])
+      }else{
+        players[player]["day"] = []
+      }
     }
    
     r = 1   
@@ -399,3 +429,29 @@ function mini_year(event){
   }
 
 }
+
+function ranked_games(event){
+  var month_table = this.parentElement.parentElement.parentElement.parentElement;
+
+  if (this.classList.contains("not_calc")){
+    this.classList.remove("not_calc");
+    ranked_calc = true;
+  }else{
+    this.classList.add("not_calc");
+    ranked_calc = false;
+  };
+  calculation(month_table);
+};
+
+function unranked_games(event){
+  var month_table = this.parentElement.parentElement.parentElement.parentElement;
+
+  if (this.classList.contains("not_calc")){
+    this.classList.remove("not_calc");
+    unranked_calc = true;
+  }else{
+    this.classList.add("not_calc");
+    unranked_calc = false;
+  };
+  calculation(month_table);
+};

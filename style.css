@@ -195,3 +195,10 @@ body{
 .minimize .month_table{
     display: none;
 }
+
+
+.ranked{
+    cursor: pointer;
+    border-left: solid 2px #1e5bab;
+    padding: 4px;
+}
