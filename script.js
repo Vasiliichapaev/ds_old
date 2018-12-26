@@ -2,7 +2,7 @@
 var x = 0;
 var y = 0;
 
-document.addEventListener("mousemove", cursor)
+// document.addEventListener("mousemove", cursor)
 
 
 Date.prototype.daysInMonth = function() {
