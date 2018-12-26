@@ -116,7 +116,7 @@ body{
     display: flex;
     margin-left: 1px;
     margin-bottom: 1px;
-
+    cursor: pointer;
 }
 
 .player_name{
@@ -207,3 +207,14 @@ body{
     border-left: solid 2px #1e5bab;
     padding: 4px;
 }
+
+.details_container{
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    position: absolute;
+    z-index: 10;
+    display:none;
+
+}
+

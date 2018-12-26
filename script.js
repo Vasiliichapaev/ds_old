@@ -1,4 +1,10 @@
 
+var x = 0;
+var y = 0;
+
+document.addEventListener("mousemove", cursor)
+
+
 Date.prototype.daysInMonth = function() {
   return 33 - new Date(this.getFullYear(), this.getMonth(), 33).getDate();
 };
@@ -35,8 +41,9 @@ var now = new Date();
 var now_year = now.getFullYear();
 var now_month = now.getMonth();
 var day_seconds = 86400;
-
 var board = document.querySelector(".board");
+
+
 for (var year=now_year; year>=2012; year--){
 
   var year_table = document.createElement('div');
@@ -137,6 +144,8 @@ for (var year=now_year; year>=2012; year--){
       for (player in players){
         var cell = document.createElement('div');
         cell.classList.add("cell");
+        cell.addEventListener("mouseover", details)
+        cell.addEventListener("mouseleave", details_clear)
         day_colymn.appendChild(cell);
       };
     };
@@ -213,9 +222,8 @@ function players_data(){
       request.open('GET', 'https://api.opendota.com/api/players/' + players[player]["id"][g] + '/matches', false);
       request.send();
       var games = JSON.parse(request.responseText);
-      
       for (i in games){
-        lst.push([games[i]["start_time"], win_loose(i, games), ranked(i, games)]);
+        lst.push([games[i]["start_time"], win_loose(i, games), ranked(i, games), games[i]["kills"], games[i]["deaths"], games[i]["assists"], games[i]["match_id"]]);
       }
     }
     players[player]["games"] = lst;
@@ -455,3 +463,39 @@ function unranked_games(event){
   };
   calculation(month_table);
 };
+
+function details(){
+  if (this.children.length > 0){
+    var day_details = document.createElement('div');
+    day_details.classList.add("day_details");
+  
+    var details_container = document.querySelector(".details_container");
+    var rect = this.getBoundingClientRect();
+    
+    details_container.style.top = (scrollY + rect.top + 15).toString() + "px";
+    details_container.style.left = (rect.left + rect.width).toString() + "px";
+    details_container.style.display = "flex";
+  };
+
+
+
+};
+
+function details_clear(){
+  var details_container = document.querySelector(".details_container");
+  var details_rect = details_container.getBoundingClientRect();
+  var rect = this.getBoundingClientRect();
+
+  // if ((x>=rect.left && x<=(rect.right+rect.width)) && (y>=rect.top && x<=(rect.top+rect.height))){
+
+  // };
+
+
+  details_container.style.display = "none";
+};
+
+
+// function cursor(event){
+//   x = event.clientX;
+//   y = event.clientY;
+// };
