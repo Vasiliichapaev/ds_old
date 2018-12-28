@@ -214,6 +214,7 @@ body{
     background-color:  rgb(59, 65, 77);
     position: absolute;
     left: 30px;   
+    cursor: default;
 }
 
 .game_details{
