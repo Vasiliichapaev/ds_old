@@ -43,10 +43,6 @@ table {
 }
 
 body{
-    /* background-color:#2571b7;
-    background-image: linear-gradient(0deg, rgba(218, 216, 216, .2) 1px, transparent 1px), linear-gradient(90deg, rgba(218, 216, 216, .2) 1px, transparent 1px);
-    background-size: 25px 25px;
-    background-attachment: fixed; */
     background-image: url("rak.jpg");
     background-attachment: fixed;
     background-size: 100%;
@@ -68,8 +64,6 @@ body{
     margin-bottom: 20px;
     width: 1315px;
     border-radius: 15px 15px 0 0;
-
-    /* background-color: #d4d4d4; */
 }
 
 .minimize{
@@ -96,11 +90,9 @@ body{
     background-color: #1e5bab;
     margin-bottom: 30px;
     margin-left: 30px;
-    /* box-shadow: 5px 5px ; */
     border-right:solid 1px;
-    /* border-color: #1e5bab;   */
     display: table; 
-    opacity: 0.8;
+    opacity: 0.85;
 }
 
 .row{
@@ -116,7 +108,6 @@ body{
     display: flex;
     margin-left: 1px;
     margin-bottom: 1px;
-    cursor: pointer;
 }
 
 .player_name{
@@ -208,13 +199,89 @@ body{
     padding: 4px;
 }
 
-.details_container{
-    width: 100px;
-    height: 100px;
-    background-color: red;
-    position: absolute;
-    z-index: 10;
-    display:none;
-
+.pointer{
+    cursor: pointer;
 }
 
+.popup{
+    /* opacity: 0; */
+    position: absolute;
+    display: table; 
+    cursor: pointer;
+}
+
+.details_container{
+    background-color:  rgb(59, 65, 77);
+    position: absolute;
+    left: 30px;   
+}
+
+.game_details{
+    background-color:  rgb(22, 30, 39);
+    height: 35px;
+    width: 300px;
+    margin-top: 5px;
+}
+
+.game_details:hover{
+    background-color:  rgb(71, 80, 80);
+}
+
+.details_head{
+    opacity: 1;
+    display: flex;
+    color: white;
+}
+
+
+.hero_head{
+    height: 20px;
+    width: 180px;
+}
+
+.kda{
+    height: 25px;
+    width: 30px;
+    padding-top: 10px;
+    padding-left: 5px;
+    text-align: center;
+}
+
+.hero_container{
+    display: flex;
+    color: white;
+}
+
+.hero_name{
+    padding-top: 10px;
+    padding-left: 10px;
+    font-size: 15px;
+    width: 140px;
+}
+
+.hero{
+    width: 30px;
+    height: 30px;
+    display: flex;
+}
+
+.hero img{
+    width: 27px;
+    height: 27px;
+    margin: auto;
+}
+
+.red{
+    color: red;
+}
+
+.green{
+    color: green;
+}
+
+.hero_container a{
+    display: block;
+    height: 100%; 
+    position: absolute;
+    width: 100%
+}

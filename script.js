@@ -1,10 +1,3 @@
-
-var x = 0;
-var y = 0;
-
-// document.addEventListener("mousemove", cursor)
-
-
 Date.prototype.daysInMonth = function() {
   return 33 - new Date(this.getFullYear(), this.getMonth(), 33).getDate();
 };
@@ -18,6 +11,7 @@ var players = {
   "BloOdTerrOr": {"id": [120491980]}
 };
 
+var heroes = {};
 
 var months = ["Январь", 
               "Февраль", 
@@ -36,13 +30,15 @@ var ranked_calc = true;
 var unranked_calc = true;
 
 players_data();
+heroes_data();
 
 var now = new Date();
 var now_year = now.getFullYear();
 var now_month = now.getMonth();
 var day_seconds = 86400;
 var board = document.querySelector(".board");
-
+var popup = document.querySelector('.popup');
+popup.addEventListener("mouseleave", details_clear);
 
 for (var year=now_year; year>=2012; year--){
 
@@ -144,8 +140,6 @@ for (var year=now_year; year>=2012; year--){
       for (player in players){
         var cell = document.createElement('div');
         cell.classList.add("cell");
-        cell.addEventListener("mouseover", details)
-        cell.addEventListener("mouseleave", details_clear)
         day_colymn.appendChild(cell);
       };
     };
@@ -214,6 +208,18 @@ for (var year=now_year; year>=2012; year--){
   }
 }
 
+function heroes_data(){
+  var request = new XMLHttpRequest();
+  request.open('GET', 'https://api.opendota.com/api/heroStats', false);
+  request.send();
+  var heroes_json = JSON.parse(request.responseText);
+
+  for (i in heroes_json){
+    heroes[heroes_json[i]["id"]] = [heroes_json[i]["localized_name"], heroes_json[i]["icon"]];
+  };
+
+};
+
 function players_data(){
   for (player in players){
     var lst = [];
@@ -223,7 +229,7 @@ function players_data(){
       request.send();
       var games = JSON.parse(request.responseText);
       for (i in games){
-        lst.push([games[i]["start_time"], win_loose(i, games), ranked(i, games), games[i]["kills"], games[i]["deaths"], games[i]["assists"], games[i]["match_id"]]);
+        lst.push([games[i]["start_time"], win_loose(i, games), ranked(i, games), games[i]["hero_id"], games[i]["kills"], games[i]["deaths"], games[i]["assists"], games[i]["match_id"]]);
       }
     }
     players[player]["games"] = lst;
@@ -273,8 +279,12 @@ function calculation(month_table) {
    
     var r = 1;  
     for (player in players){
+      
       var cl = row.children[c].children[r];
       r++;
+
+      cl.attributes["day_details"] = []
+      cl.removeEventListener("mouseenter", details);
 
       if (cl.children[0]){cl.children[0].remove()};
       if (cl.children[0]){cl.children[0].remove()};
@@ -289,6 +299,11 @@ function calculation(month_table) {
               w++;
             }else{
               l++;
+            };
+            if (w>0 || l>0){
+              cl.attributes["day_details"].push(players[player]["day"][i]);
+              cl.addEventListener("mouseenter", details);
+              cl.classList.add("pointer");
             };
           };
         };
@@ -310,9 +325,9 @@ function calculation(month_table) {
         loose.classList.add("loose");
         loose.innerHTML = l;
         cl.appendChild(loose);
-      }
-    }
-  }
+      };
+    };
+  };
 
   var c = row.children.length - 3;
   var r = 1;
@@ -465,37 +480,121 @@ function unranked_games(event){
 };
 
 function details(){
-  if (this.children.length > 0){
-    var day_details = document.createElement('div');
-    day_details.classList.add("day_details");
+
+  var rect = this.getBoundingClientRect();
   
-    var details_container = document.querySelector(".details_container");
-    var rect = this.getBoundingClientRect();
-    
-    details_container.style.top = (scrollY + rect.top + 15).toString() + "px";
-    details_container.style.left = (rect.left + rect.width).toString() + "px";
-    details_container.style.display = "flex";
+  // popup.style.display = "table";
+
+  if (popup.children.length > 0){
+    popup.lastChild.remove()
   };
 
+  popup.style.top = (scrollY + rect.top).toString() + "px";
+  popup.style.left = (rect.left).toString() + "px";
+  popup.style.width = rect.width + "px";
+  popup.style.height = rect.height + "px";
+  
+  var details_container = document.createElement('div');
+  details_container.classList.add("details_container");
 
+  popup.appendChild(details_container);
+
+  var details_head = document.createElement('div');
+  details_head.classList.add("details_head");
+  details_container.appendChild(details_head);
+
+  var hero_head = document.createElement('div');
+  hero_head.classList.add("hero_head");
+  details_head.appendChild(hero_head);
+
+  var kda = document.createElement('div');
+  kda.classList.add("kda");
+  details_head.appendChild(kda);
+  kda.innerHTML = "У"
+
+  var kda = document.createElement('div');
+  kda.classList.add("kda");
+  details_head.appendChild(kda);
+  kda.innerHTML = "С"
+
+  var kda = document.createElement('div');
+  kda.classList.add("kda");
+  details_head.appendChild(kda);
+  kda.innerHTML = "П"
+
+
+  for (game in this.attributes["day_details"]){
+    var game_details = document.createElement('div');
+    game_details.classList.add("game_details");
+
+    var hero_container = document.createElement('div');
+    hero_container.classList.add("hero_container");
+
+    var hero_img = document.createElement('img');
+    var hero_id = this.attributes["day_details"][game][3];
+    hero_img.src = "https://api.opendota.com" + heroes[hero_id][1];
+
+    var hero = document.createElement('div');
+    hero.classList.add("hero");
+    hero.appendChild(hero_img);
+
+    var hero_name = document.createElement('div');
+    hero_name.classList.add("hero_name");
+    hero_name.innerHTML = heroes[hero_id][0];
+
+    if (this.attributes["day_details"][game][1]){
+      hero_name.classList.add("green");
+    }else{
+      hero_name.classList.add("red");
+    };
+
+    hero_container.appendChild(hero);
+    hero_container.appendChild(hero_name);
+
+
+    var kda = document.createElement('div');
+    kda.classList.add("kda");
+    hero_container.appendChild(kda);
+    kda.innerHTML = this.attributes["day_details"][game][4]
+  
+    var kda = document.createElement('div');
+    kda.classList.add("kda");
+    hero_container.appendChild(kda);
+    kda.innerHTML = this.attributes["day_details"][game][5]
+  
+    var kda = document.createElement('div');
+    kda.classList.add("kda");
+    hero_container.appendChild(kda);
+    kda.innerHTML = this.attributes["day_details"][game][6]
+
+
+    game_details.appendChild(hero_container);
+
+
+    var game_link = document.createElement('a');
+    game_link.href = "https://ru.dotabuff.com/matches/" + this.attributes["day_details"][game][7]
+    game_link.classList.add("game_link");
+
+    
+    hero_container.appendChild(game_link);
+
+    details_container.appendChild(game_details);
+
+  };
+
+  
+  // setTimeout(details_display, 200, popup);
 
 };
+
+
+function details_display(popup){
+  
+};
+
 
 function details_clear(){
-  var details_container = document.querySelector(".details_container");
-  var details_rect = details_container.getBoundingClientRect();
-  var rect = this.getBoundingClientRect();
-
-  // if ((x>=rect.left && x<=(rect.right+rect.width)) && (y>=rect.top && x<=(rect.top+rect.height))){
-
-  // };
-
-
-  details_container.style.display = "none";
+  popup.style.top = "0px";
+  popup.style.left = "0px";
+  this.lastChild.remove();
 };
-
-
-// function cursor(event){
-//   x = event.clientX;
-//   y = event.clientY;
-// };
