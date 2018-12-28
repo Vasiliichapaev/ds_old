@@ -282,7 +282,7 @@ body{
 
 .hero_container a{
     display: block;
-    height: 100%; 
+    height: 30px; 
     position: absolute;
-    width: 100%
+    width: 100%;
 }
