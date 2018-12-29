@@ -38,6 +38,7 @@ var now_month = now.getMonth();
 var day_seconds = 86400;
 var board = document.querySelector(".board");
 var popup = document.querySelector('.popup');
+popup.addEventListener("mouseenter", details);
 popup.addEventListener("mouseleave", details_clear);
 
 for (var year=now_year; year>=2012; year--){
@@ -284,7 +285,7 @@ function calculation(month_table) {
       r++;
 
       cl.attributes["day_details"] = []
-      cl.removeEventListener("mouseenter", details);
+      
 
       if (cl.children[0]){cl.children[0].remove()};
       if (cl.children[0]){cl.children[0].remove()};
@@ -302,7 +303,7 @@ function calculation(month_table) {
             };
             if (w>0 || l>0){
               cl.attributes["day_details"].push(players[player]["day"][i]);
-              cl.addEventListener("mouseenter", details);
+              cl.addEventListener("mouseenter", popup_push);
               cl.classList.add("pointer");
             };
           };
@@ -479,11 +480,9 @@ function unranked_games(event){
   calculation(month_table);
 };
 
-function details(){
-
+function popup_push(){
   var rect = this.getBoundingClientRect();
-  
-  // popup.style.display = "table";
+  popup.attributes["day_details"] = this.attributes["day_details"];
 
   if (popup.children.length > 0){
     popup.lastChild.remove()
@@ -493,6 +492,15 @@ function details(){
   popup.style.left = (rect.left).toString() + "px";
   popup.style.width = rect.width + "px";
   popup.style.height = rect.height + "px";
+
+};
+
+
+
+
+
+
+function details(){
   
   var details_container = document.createElement('div');
   details_container.classList.add("details_container");
@@ -523,7 +531,7 @@ function details(){
   kda.innerHTML = "П"
 
 
-  for (game in this.attributes["day_details"]){
+  for (game in popup.attributes["day_details"]){
     var game_details = document.createElement('div');
     game_details.classList.add("game_details");
 
@@ -542,7 +550,7 @@ function details(){
     hero_name.classList.add("hero_name");
     hero_name.innerHTML = heroes[hero_id][0];
 
-    if (this.attributes["day_details"][game][1]){
+    if (popup.attributes["day_details"][game][1]){
       hero_name.classList.add("green");
     }else{
       hero_name.classList.add("red");
@@ -555,24 +563,24 @@ function details(){
     var kda = document.createElement('div');
     kda.classList.add("kda");
     hero_container.appendChild(kda);
-    kda.innerHTML = this.attributes["day_details"][game][4]
+    kda.innerHTML = popup.attributes["day_details"][game][4]
   
     var kda = document.createElement('div');
     kda.classList.add("kda");
     hero_container.appendChild(kda);
-    kda.innerHTML = this.attributes["day_details"][game][5]
+    kda.innerHTML = popup.attributes["day_details"][game][5]
   
     var kda = document.createElement('div');
     kda.classList.add("kda");
     hero_container.appendChild(kda);
-    kda.innerHTML = this.attributes["day_details"][game][6]
+    kda.innerHTML = popup.attributes["day_details"][game][6]
 
 
     game_details.appendChild(hero_container);
 
 
     var game_link = document.createElement('a');
-    game_link.href = "https://ru.dotabuff.com/matches/" + this.attributes["day_details"][game][7]
+    game_link.href = "https://ru.dotabuff.com/matches/" + popup.attributes["day_details"][game][7]
     game_link.classList.add("game_link");
 
     
