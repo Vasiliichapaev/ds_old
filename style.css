@@ -206,7 +206,7 @@ body{
 .popup{
     /* opacity: 0; */
     position: absolute;
-    display: table; 
+    display: none; 
     cursor: pointer;
 }
 

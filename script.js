@@ -483,6 +483,7 @@ function unranked_games(event){
 function popup_push(){
   var rect = this.getBoundingClientRect();
   popup.attributes["day_details"] = this.attributes["day_details"];
+  popup.style.display = "table"
 
   if (popup.children.length > 0){
     popup.lastChild.remove()
@@ -605,4 +606,5 @@ function details_clear(){
   popup.style.top = "0px";
   popup.style.left = "0px";
   this.lastChild.remove();
+  popup.style.display = "none";
 };
