@@ -248,6 +248,14 @@ body{
     text-align: center;
 }
 
+.kda_head{
+    height: 20px;
+    width: 30px;
+    padding-top: 10px;
+    padding-left: 5px;
+    text-align: center;
+}
+
 .hero_container{
     display: flex;
 }
@@ -284,9 +292,81 @@ body{
     color: green;
 }
 
+.white{
+    color: white;
+}
+
 .hero_container a{
     display: block;
     height: 30px; 
     position: absolute;
     width: 100%;
+}
+
+.month_popup{
+    position: absolute;
+    display: none;
+    background-color:  rgb(59, 65, 77);
+    max-height: 150px;
+}   
+
+.month_details_head{
+    display: flex;
+    text-align: center;
+}
+
+.month_hero_head{
+    height: 20px;
+    width: 30px;
+}
+
+.month_w{
+    height: 20px;
+    width: 30px;
+    margin-top: 5px;
+    color: green;
+}
+
+.month_l{
+    height: 20px;
+    width: 30px;
+    margin-top: 5px;
+    color: red;
+}
+
+.month_wr{
+    height: 20px;
+    width: 70px;
+    margin-top: 5px;
+    /* color: white; */
+}
+
+.month_details{
+    opacity: 1;
+    display: flex;
+    text-align: center;
+    background-color:  rgb(22, 30, 39);
+    margin-top: 4px;
+}
+
+
+
+
+
+
+.month_hero_container{
+    display: flex;
+}
+
+.hero{
+    width: 30px;
+    height: 30px;
+    display: flex;
+}
+
+
+.hero img{
+    width: 27px;
+    height: 27px;
+    margin: auto;
 }

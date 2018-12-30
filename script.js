@@ -249,7 +249,9 @@ function ranked(i, games){
 };
 
 function calculation(month_table) {
+  
   for (player in players){
+    players[player]["month"] = [];
     players[player]["w"] = 0;
     players[player]["l"] = 0;
     players[player]["valid"] = false;
@@ -307,6 +309,7 @@ function calculation(month_table) {
               cl.attributes["day_details"].push(players[player]["day"][i]);
               cl.addEventListener("mouseenter", popup_push);
               cl.classList.add("pointer");
+              players[player]["month"].push(players[player]["day"][i]);
             };
           };
         };
@@ -371,6 +374,10 @@ function calculation(month_table) {
     var cl = row.children[c].children[r];
     r++;
 
+    cl.removeEventListener("mouseenter", month_details_popup);
+    cl.removeEventListener("mouseleave", month_details_popdown);
+    cl.classList.remove("pointer");
+
     if (cl.children[0]){cl.children[0].remove()};
 
     if (players[player]["w"]>0){
@@ -388,6 +395,14 @@ function calculation(month_table) {
         cl.appendChild(win);
       };
     };
+
+    if (players[player]["w"] > 0 || players[player]["l"] > 0){
+      cl.attributes["month_details"] = month_details(players[player]["month"]);
+      cl.addEventListener("mouseenter", month_details_popup);
+      cl.addEventListener("mouseleave", month_details_popdown);
+      cl.classList.add("pointer");
+    };
+
   };
 };
 
@@ -498,12 +513,7 @@ function popup_push(){
 
 };
 
-
-
-
-
-
-function details(){
+function details(event){
   
   var details_container = document.createElement('div');
   details_container.classList.add("details_container");
@@ -519,17 +529,17 @@ function details(){
   details_head.appendChild(hero_head);
 
   var kda = document.createElement('div');
-  kda.classList.add("kda");
+  kda.classList.add("kda_head");
   details_head.appendChild(kda);
   kda.innerHTML = "У"
 
   var kda = document.createElement('div');
-  kda.classList.add("kda");
+  kda.classList.add("kda_head");
   details_head.appendChild(kda);
   kda.innerHTML = "С"
 
   var kda = document.createElement('div');
-  kda.classList.add("kda");
+  kda.classList.add("kda_head");
   details_head.appendChild(kda);
   kda.innerHTML = "П"
 
@@ -601,4 +611,160 @@ function details(){
 function details_clear(){
   this.lastChild.remove();
   popup.style.display = "none";
+};
+
+
+function month_details(month_lst){
+  var hero_lst = [];
+  for (hero in heroes){
+    var hero_games =  month_lst.filter(x => x[3] == hero );
+    if (hero_games.length > 0){
+      hero_lst.push([hero, hero_games]);
+    };
+  };
+  return hero_lst;
+};
+
+function month_details_popup(event){
+
+  var month_popup = document.querySelector(".month_popup");
+  var rect = this.getBoundingClientRect();
+
+  month_popup.style.top = (scrollY + rect.top).toString() + "px";
+  month_popup.style.left = (rect.left - 160).toString() + "px";
+  month_popup.style.display = "table";
+
+  var month_details_container = document.createElement('div');
+  month_details_container.classList.add("month_details_container");
+
+  month_popup.appendChild(month_details_container);
+
+  var month_details_head = document.createElement('div');
+  month_details_head.classList.add("month_details_head");
+  month_details_container.appendChild(month_details_head);
+
+  var month_hero_head = document.createElement('div');
+  month_hero_head.classList.add("month_hero_head");
+  month_details_head.appendChild(month_hero_head);
+
+  var month_w = document.createElement('div');
+  month_w.classList.add("month_w");
+  month_details_head.appendChild(month_w);
+  month_w.innerHTML = "W"
+
+  var month_l = document.createElement('div');
+  month_l.classList.add("month_l");
+  month_details_head.appendChild(month_l);
+  month_l.innerHTML = "L"
+
+  var month_wr = document.createElement('div');
+  month_wr.classList.add("month_wr", "white");
+  month_details_head.appendChild(month_wr);
+  month_wr.innerHTML = "W/(W+L)"
+
+  month_games = this.attributes["month_details"]
+
+  for (hero in month_games){
+    
+    var month_details = document.createElement('div');
+    month_details.classList.add("month_details");
+
+    var month_hero_container = document.createElement('div');
+    month_hero_container.classList.add("month_hero_container");
+
+    var hero_img = document.createElement('img');
+    var hero_id = month_games[hero][0];
+    var games = month_games[hero][1];
+    
+
+    hero_img.src = "https://api.opendota.com" + heroes[hero_id][1];
+
+    var hero = document.createElement('div');
+    hero.classList.add("hero");
+    hero.appendChild(hero_img);
+
+    month_hero_container.appendChild(hero);
+    month_details.appendChild(month_hero_container);
+    month_details_container.appendChild(month_details);
+
+    var w = 0;
+    var l = 0;
+   
+
+    for (i in games){
+      if (games[i][1]){
+        w++
+      }else{
+        l++
+      };
+    };
+
+    var winrate = w / (l + w);
+
+    var month_w = document.createElement('div');
+    month_w.classList.add("month_w");
+    month_hero_container.appendChild(month_w);
+    month_w.innerHTML = w
+  
+    var month_l = document.createElement('div');
+    month_l.classList.add("month_l");
+    month_hero_container.appendChild(month_l);
+    month_l.innerHTML = l
+  
+    var month_wr = document.createElement('div');
+    month_wr.classList.add("month_wr");
+    month_hero_container.appendChild(month_wr);
+    month_wr.innerHTML = winrate.toFixed(2)
+
+    if (winrate < 0.5){
+      month_wr.classList.add("red");
+    }else{
+      month_wr.classList.add("green");
+    };
+
+
+    // if (popup.attributes["day_details"][game][1]){
+    //   hero_container.classList.add("green");
+    // }else{
+    //   hero_container.classList.add("red");
+    // };
+
+    // hero_container.appendChild(hero);
+
+
+
+    // var kda = document.createElement('div');
+    // kda.classList.add("kda");
+    // hero_container.appendChild(kda);
+    // kda.innerHTML = popup.attributes["day_details"][game][4]
+  
+    // var kda = document.createElement('div');
+    // kda.classList.add("kda");
+    // hero_container.appendChild(kda);
+    // kda.innerHTML = popup.attributes["day_details"][game][5]
+  
+    // var kda = document.createElement('div');
+    // kda.classList.add("kda");
+    // hero_container.appendChild(kda);
+    // kda.innerHTML = popup.attributes["day_details"][game][6]
+
+
+
+    
+
+  };
+
+
+
+
+
+
+
+
+};
+
+function month_details_popdown(event){
+  var month_popup = document.querySelector(".month_popup");
+  month_popup.lastChild.remove();
+  month_popup.style.display = "none"
 };
