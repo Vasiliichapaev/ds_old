@@ -285,6 +285,8 @@ function calculation(month_table) {
       r++;
 
       cl.attributes["day_details"] = []
+      cl.removeEventListener("mouseenter", popup_push);
+      cl.classList.remove("pointer");
       
 
       if (cl.children[0]){cl.children[0].remove()};
@@ -547,18 +549,21 @@ function details(){
     hero.classList.add("hero");
     hero.appendChild(hero_img);
 
-    var hero_name = document.createElement('div');
-    hero_name.classList.add("hero_name");
-    hero_name.innerHTML = heroes[hero_id][0];
+    // var hero_name = document.createElement('div');
+    // hero_name.classList.add("hero_name");
+    // hero_name.innerHTML = heroes[hero_id][0];
+
+    // hero.appendChild(hero_name);
+
 
     if (popup.attributes["day_details"][game][1]){
-      hero_name.classList.add("green");
+      hero_container.classList.add("green");
     }else{
-      hero_name.classList.add("red");
+      hero_container.classList.add("red");
     };
 
     hero_container.appendChild(hero);
-    hero_container.appendChild(hero_name);
+
 
 
     var kda = document.createElement('div');
@@ -591,20 +596,9 @@ function details(){
 
   };
 
-  
-  // setTimeout(details_display, 200, popup);
-
 };
-
-
-function details_display(popup){
-  
-};
-
 
 function details_clear(){
-  popup.style.top = "0px";
-  popup.style.left = "0px";
   this.lastChild.remove();
   popup.style.display = "none";
 };

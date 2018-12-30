@@ -220,7 +220,7 @@ body{
 .game_details{
     background-color:  rgb(22, 30, 39);
     height: 35px;
-    width: 300px;
+    width: 140px;
     margin-top: 5px;
 }
 
@@ -237,7 +237,7 @@ body{
 
 .hero_head{
     height: 20px;
-    width: 180px;
+    width: 30px;
 }
 
 .kda{
@@ -250,14 +250,17 @@ body{
 
 .hero_container{
     display: flex;
-    color: white;
 }
 
 .hero_name{
-    padding-top: 10px;
+    position: absolute;
+    left: 30px;
+    top: -10px;
     padding-left: 10px;
     font-size: 15px;
-    width: 140px;
+    color: white;
+    background-color: navy;
+    display: none;
 }
 
 .hero{
@@ -265,6 +268,7 @@ body{
     height: 30px;
     display: flex;
 }
+
 
 .hero img{
     width: 27px;
