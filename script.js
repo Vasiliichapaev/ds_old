@@ -40,8 +40,8 @@ var board = document.querySelector(".board");
 var popup = document.querySelector('.popup');
 
 popup.addEventListener("mouseleave", details_clear);
-popup.attributes["month_details"] = [];
-popup.attributes["day_details"] = [];
+popup.attributes["content"] = [];
+
 
 for (var year=now_year; year>=2012; year--){
 
@@ -501,12 +501,12 @@ function popup_push(){
   var rect = this.getBoundingClientRect();
 
   if (this.attributes["day_details"]){
-    popup.attributes["day_details"] = this.attributes["day_details"];
+    popup.attributes["content"] = this.attributes["day_details"];
     popup.addEventListener("mouseenter", details);
   };
 
   if (this.attributes["month_details"]){
-    popup.attributes["month_details"] = this.attributes["month_details"];
+    popup.attributes["content"] = this.attributes["month_details"];
     popup.addEventListener("mouseenter", month_details_popup);
   };
 
@@ -560,7 +560,7 @@ function details(event){
   kda.innerHTML = "П"
 
 
-  for (game in popup.attributes["day_details"]){
+  for (game in popup.attributes["content"]){
     var game_details = document.createElement('div');
     game_details.classList.add("game_details");
 
@@ -568,7 +568,7 @@ function details(event){
     hero_container.classList.add("hero_container");
 
     var hero_img = document.createElement('img');
-    var hero_id = this.attributes["day_details"][game][3];
+    var hero_id = popup.attributes["content"][game][3];
     hero_img.src = "https://api.opendota.com" + heroes[hero_id][1];
 
     var hero = document.createElement('div');
@@ -582,7 +582,7 @@ function details(event){
     // hero.appendChild(hero_name);
 
 
-    if (popup.attributes["day_details"][game][1]){
+    if (popup.attributes["content"][game][1]){
       hero_container.classList.add("green");
     }else{
       hero_container.classList.add("red");
@@ -595,24 +595,24 @@ function details(event){
     var kda = document.createElement('div');
     kda.classList.add("kda");
     hero_container.appendChild(kda);
-    kda.innerHTML = popup.attributes["day_details"][game][4]
+    kda.innerHTML = popup.attributes["content"][game][4]
   
     var kda = document.createElement('div');
     kda.classList.add("kda");
     hero_container.appendChild(kda);
-    kda.innerHTML = popup.attributes["day_details"][game][5]
+    kda.innerHTML = popup.attributes["content"][game][5]
   
     var kda = document.createElement('div');
     kda.classList.add("kda");
     hero_container.appendChild(kda);
-    kda.innerHTML = popup.attributes["day_details"][game][6]
+    kda.innerHTML = popup.attributes["content"][game][6]
 
 
     game_details.appendChild(hero_container);
 
 
     var game_link = document.createElement('a');
-    game_link.href = "https://ru.dotabuff.com/matches/" + popup.attributes["day_details"][game][7]
+    game_link.href = "https://ru.dotabuff.com/matches/" + popup.attributes["content"][game][7]
     game_link.classList.add("game_link");
 
     
@@ -631,8 +631,7 @@ function details_clear(){
   popup.style.display = "none";
   popup.removeEventListener("mouseenter", details);
   popup.removeEventListener("mouseenter", month_details_popup);
-  popup.attributes["month_details"] = [];
-  popup.attributes["day_details"] = [];
+  popup.attributes["content"] = [];
 };
 
 
@@ -683,7 +682,7 @@ function month_details_popup(event){
   month_details_head.appendChild(month_wr);
   month_wr.innerHTML = "W/(W+L)"
 
-  month_games = popup.attributes["month_details"]
+  month_games = popup.attributes["content"]
 
   for (hero in month_games){
     

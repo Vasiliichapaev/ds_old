@@ -311,6 +311,7 @@ body{
     max-height: 300px;
     overflow-y: auto;
     overflow-x: visible;
+    cursor: default;
 }   
 
 .month_details_head{
