@@ -742,50 +742,5 @@ function month_details_popup(event){
     }else{
       month_wr.classList.add("green");
     };
-
-
-    // if (popup.attributes["day_details"][game][1]){
-    //   hero_container.classList.add("green");
-    // }else{
-    //   hero_container.classList.add("red");
-    // };
-
-    // hero_container.appendChild(hero);
-
-
-
-    // var kda = document.createElement('div');
-    // kda.classList.add("kda");
-    // hero_container.appendChild(kda);
-    // kda.innerHTML = popup.attributes["day_details"][game][4]
-  
-    // var kda = document.createElement('div');
-    // kda.classList.add("kda");
-    // hero_container.appendChild(kda);
-    // kda.innerHTML = popup.attributes["day_details"][game][5]
-  
-    // var kda = document.createElement('div');
-    // kda.classList.add("kda");
-    // hero_container.appendChild(kda);
-    // kda.innerHTML = popup.attributes["day_details"][game][6]
-
-
-
-    
-
   };
-
-
-
-
-
-
-
-
-};
-
-function month_details_popdown(event){
-  var month_popup = document.querySelector(".month_popup");
-  month_popup.lastChild.remove();
-  month_popup.style.display = "none"
 };
