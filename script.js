@@ -40,6 +40,8 @@ var board = document.querySelector(".board");
 var popup = document.querySelector('.popup');
 
 popup.addEventListener("mouseleave", details_clear);
+popup.attributes["month_details"] = [];
+popup.attributes["day_details"] = [];
 
 for (var year=now_year; year>=2012; year--){
 
@@ -498,10 +500,6 @@ function unranked_games(event){
 function popup_push(){
   var rect = this.getBoundingClientRect();
 
-  
-
-  
-
   if (this.attributes["day_details"]){
     popup.attributes["day_details"] = this.attributes["day_details"];
     popup.addEventListener("mouseenter", details);
@@ -526,7 +524,12 @@ function popup_push(){
 };
 
 function details(event){
+  if (popup.children.length > 0){
+    popup.lastChild.remove()
+  };
  
+  popup.removeEventListener("mouseenter", details);
+  popup.removeEventListener("mouseenter", month_details_popup);
   
   var details_container = document.createElement('div');
   details_container.classList.add("details_container");
@@ -622,10 +625,14 @@ function details(event){
 };
 
 function details_clear(){
-  this.lastChild.remove();
+  if (popup.children.length > 0){
+    popup.lastChild.remove()
+  };
   popup.style.display = "none";
   popup.removeEventListener("mouseenter", details);
   popup.removeEventListener("mouseenter", month_details_popup);
+  popup.attributes["month_details"] = [];
+  popup.attributes["day_details"] = [];
 };
 
 
@@ -641,6 +648,12 @@ function month_details(month_lst){
 };
 
 function month_details_popup(event){
+  if (popup.children.length > 0){
+    popup.lastChild.remove()
+  };
+
+  popup.removeEventListener("mouseenter", details);
+  popup.removeEventListener("mouseenter", month_details_popup);
 
   var month_details_container = document.createElement('div');
   month_details_container.classList.add("month_details_container");
