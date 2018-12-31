@@ -38,7 +38,7 @@ var now_month = now.getMonth();
 var day_seconds = 86400;
 var board = document.querySelector(".board");
 var popup = document.querySelector('.popup');
-popup.addEventListener("mouseenter", details);
+
 popup.addEventListener("mouseleave", details_clear);
 
 for (var year=now_year; year>=2012; year--){
@@ -374,8 +374,7 @@ function calculation(month_table) {
     var cl = row.children[c].children[r];
     r++;
 
-    cl.removeEventListener("mouseenter", month_details_popup);
-    cl.removeEventListener("mouseleave", month_details_popdown);
+    cl.removeEventListener("mouseenter", popup_push);
     cl.classList.remove("pointer");
 
     if (cl.children[0]){cl.children[0].remove()};
@@ -398,8 +397,7 @@ function calculation(month_table) {
 
     if (players[player]["w"] > 0 || players[player]["l"] > 0){
       cl.attributes["month_details"] = month_details(players[player]["month"]);
-      cl.addEventListener("mouseenter", month_details_popup);
-      cl.addEventListener("mouseleave", month_details_popdown);
+      cl.addEventListener("mouseenter", popup_push);
       cl.classList.add("pointer");
     };
 
@@ -499,7 +497,21 @@ function unranked_games(event){
 
 function popup_push(){
   var rect = this.getBoundingClientRect();
-  popup.attributes["day_details"] = this.attributes["day_details"];
+
+  
+
+  
+
+  if (this.attributes["day_details"]){
+    popup.attributes["day_details"] = this.attributes["day_details"];
+    popup.addEventListener("mouseenter", details);
+  };
+
+  if (this.attributes["month_details"]){
+    popup.attributes["month_details"] = this.attributes["month_details"];
+    popup.addEventListener("mouseenter", month_details_popup);
+  };
+
   popup.style.display = "table"
 
   if (popup.children.length > 0){
@@ -514,6 +526,7 @@ function popup_push(){
 };
 
 function details(event){
+ 
   
   var details_container = document.createElement('div');
   details_container.classList.add("details_container");
@@ -611,6 +624,8 @@ function details(event){
 function details_clear(){
   this.lastChild.remove();
   popup.style.display = "none";
+  popup.removeEventListener("mouseenter", details);
+  popup.removeEventListener("mouseenter", month_details_popup);
 };
 
 
@@ -627,17 +642,10 @@ function month_details(month_lst){
 
 function month_details_popup(event){
 
-  var month_popup = document.querySelector(".month_popup");
-  var rect = this.getBoundingClientRect();
-
-  month_popup.style.top = (scrollY + rect.top).toString() + "px";
-  month_popup.style.left = (rect.left - 160).toString() + "px";
-  month_popup.style.display = "table";
-
   var month_details_container = document.createElement('div');
   month_details_container.classList.add("month_details_container");
 
-  month_popup.appendChild(month_details_container);
+  popup.appendChild(month_details_container);
 
   var month_details_head = document.createElement('div');
   month_details_head.classList.add("month_details_head");
@@ -662,7 +670,7 @@ function month_details_popup(event){
   month_details_head.appendChild(month_wr);
   month_wr.innerHTML = "W/(W+L)"
 
-  month_games = this.attributes["month_details"]
+  month_games = popup.attributes["month_details"]
 
   for (hero in month_games){
     
