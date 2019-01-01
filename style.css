@@ -208,6 +208,7 @@ body{
     position: absolute;
     display: none; 
     cursor: pointer;
+    /* background-color: red; */
 }
 
 .details_container{
@@ -215,6 +216,9 @@ body{
     position: absolute;
     left: 30px;   
     cursor: default;
+    display: none; 
+    max-height: 350px;
+    overflow-y: auto;
 }
 
 .game_details{
@@ -304,13 +308,13 @@ body{
 }
 
 .month_details_container{
+    display: none; 
     position: absolute;
     width: 175px;
     left: -160px;
     background-color:  rgb(59, 65, 77);
     max-height: 300px;
     overflow-y: auto;
-    overflow-x: visible;
     cursor: default;
 }   
 
@@ -373,4 +377,9 @@ body{
     width: 27px;
     height: 27px;
     margin: auto;
+}
+
+.this_day{
+    color: blueviolet;
+    font-weight: bold;
 }
