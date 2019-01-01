@@ -391,7 +391,7 @@ function calculation(month_table) {
 
     if (cl.children[0]){cl.children[0].remove()};
 
-    if (players[player]["w"]>0){
+    if (players[player]["w"] + players[player]["l"] > 0){
       winrate = players[player]["w"] / (players[player]["l"] + players[player]["w"]);
 
       if (winrate<0.5){
@@ -602,13 +602,6 @@ function details(day_games){
     hero.classList.add("hero");
     hero.appendChild(hero_img);
 
-    // var hero_name = document.createElement('div');
-    // hero_name.classList.add("hero_name");
-    // hero_name.innerHTML = heroes[hero_id][0];
-
-    // hero.appendChild(hero_name);
-
-
     if (day_games[game][1]){
       hero_container.classList.add("green");
     }else{
@@ -616,8 +609,6 @@ function details(day_games){
     };
 
     hero_container.appendChild(hero);
-
-
 
     var kda = document.createElement('div');
     kda.classList.add("kda");
@@ -657,13 +648,8 @@ function month_details_popup(month_games){
     popup.lastChild.remove()
   };
 
-  // popup.removeEventListener("mouseenter", details);
-  // popup.removeEventListener("mouseenter", month_details_popup);
-
   var month_details_container = document.createElement('div');
   month_details_container.classList.add("month_details_container");
-
-  // popup.appendChild(month_details_container);
 
   var month_details_head = document.createElement('div');
   month_details_head.classList.add("month_details_head");
@@ -687,8 +673,6 @@ function month_details_popup(month_games){
   month_wr.classList.add("month_wr", "white");
   month_details_head.appendChild(month_wr);
   month_wr.innerHTML = "W/(W+L)"
-
-  // month_games = popup.attributes["content"]
 
   for (hero in month_games){
     
