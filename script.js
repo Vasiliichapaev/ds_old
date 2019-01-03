@@ -780,7 +780,10 @@ function plot_up(event){
 function plot_down(event){
   plot.style.display = 'none';
   plot_backgraund.style.display = 'none';
-  plot.lastChild.remove();
+
+  while (plot.children.length > 0){
+    plot.lastChild.remove();
+  }; 
 };
 
 function make_plot(players_data, month_start){
