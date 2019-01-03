@@ -44,6 +44,11 @@ var popup = document.querySelector('.popup');
 popup.addEventListener("mouseleave", details_clear);
 popup.addEventListener("mouseenter", e => popup.lastChild.style.display = "block");
 
+var plot = document.querySelector('.plot');
+var plot_backgraund = document.querySelector('.plot_backgraund');
+plot_backgraund.addEventListener("click", plot_down);
+
+
 for (var year=now_year; year>=2012; year--){
 
   var year_table = document.createElement('div');
@@ -76,8 +81,19 @@ for (var year=now_year; year>=2012; year--){
 
     var month_head = document.createElement('div');
     month_head.classList.add("month_head");
-    month_head.innerHTML = months[month];
     month_table.appendChild(month_head);
+
+    var month_name = document.createElement('div');
+    month_name.classList.add("month_name");
+    month_name.innerHTML = months[month];
+    month_head.appendChild(month_name);
+
+
+    var plot_img = document.createElement('img');
+    plot_img.src = "plot.png"
+    month_head.appendChild(plot_img);
+    plot_img.addEventListener("click", plot_up)
+
 
     var row = document.createElement('div');
     row.classList.add("row");
@@ -412,6 +428,7 @@ function calculation(month_table) {
       cl.addEventListener("mouseenter", popup_push);
       cl.classList.add("pointer");
     };
+    cl.attributes["month_player_details"] = [player, players[player]["month"]];
 
   };
 };
@@ -733,4 +750,131 @@ function month_details_popup(month_games){
     };
   };
   return month_details_container
+};
+
+
+function plot_up(event){
+  plot_backgraund.style.display = 'flex';
+  plot.style.display = 'flex';
+
+  let month_table = this.parentElement.parentElement;
+
+  let row = month_table.children[1];
+  let wr_column = row.children[row.children.length - 1];
+
+  var players_data = [];
+
+  for (i=1; i<wr_column.children.length; i++){
+    players_data.push(wr_column.children[i].attributes["month_player_details"]);
+  };
+  days_count = 31
+  month_start = new Date(2018, 11, 1) / 1000;
+
+  month_start = month_table.attributes["start_time"];
+
+  plot_container = make_plot(players_data, month_start);
+  plot.appendChild(plot_container);
+};
+
+
+function plot_down(event){
+  plot.style.display = 'none';
+  plot_backgraund.style.display = 'none';
+  plot.lastChild.remove();
+};
+
+function make_plot(players_data, month_start){
+  var ctx = document.createElement('canvas');
+  var days_count = new Date(month_start * 1000).daysInMonth();
+
+  var datasets = [];
+  var labels = [];
+  var colors = ['green', 'red', 'black', 'blue', 'indigo', 'brown'];
+  
+  for (i=1; i<=days_count; i++){
+    labels.push(i)
+  };
+  
+  for (i in players_data){
+      if (players_data[i][1].length == 0) continue;
+      var points = [];
+      var w = 0;
+  
+      for (k=0; k<days_count; k++){
+        let day_start = month_start + k * 86400;
+        let day_end = day_start + 86400;
+  
+        let day_games =  players_data[i][1].filter(x => x[0]>=day_start && x[0] < day_end);
+  
+        for (g in day_games){
+          if (day_games[g][1]){
+              w++;
+          }else{
+              w--;
+          };
+        };
+        points.push({
+            x: k + 1,
+            y: w
+        });
+      };
+      let params = {
+          label: players_data[i][0],
+          data: points,
+          backgroundColor: ['transparent'],
+          borderColor: [colors[i]],
+          borderWidth: 2
+      };
+      datasets.push(params);
+  };
+  
+
+  var myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+          labels: labels,
+          datasets: datasets
+      },
+      options: {
+          tooltips: {
+            enabled: false
+          },
+          elements: {
+              point: {
+                radius: 0,
+                hoverRadius: 0
+                // pointStyle: "none"
+              },
+              line: {
+                  tension: 0, // disables bezier curves
+              }
+          },
+          legend: {
+              display: true,
+              position: 'top',
+              labels: {
+                fontSize: 15,
+              }
+          },
+          animation: {
+              // duration: 0, // general animation time
+          },
+          hover: {
+              animationDuration: 0, // duration of animations when hovering an item
+          },
+          responsiveAnimationDuration: 0, // animation duration after a resize
+          scales: {
+              yAxes: [{
+                  scaleLabel: {
+                      display: true,
+                      labelString: 'Победы',
+                      fontSize: 15
+                  },
+              },],
+  
+          }
+      }
+  });
+
+  return ctx;
 };

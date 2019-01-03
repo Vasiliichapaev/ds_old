@@ -55,7 +55,7 @@ body{
     align-items: center;
     align-content: center; 
     justify-content: center; 
-    min-height: 110vh;
+    min-height: 101vh;
     min-width: 1315px;
 }
 
@@ -86,9 +86,9 @@ body{
 
 
 .year_head{
-    height: 30px;
+    height: 40px;
     text-align: center;
-    font-size: 25px;
+    font-size: 30px;
     color: white;
     font-weight: bold;
     display: flex;
@@ -181,7 +181,20 @@ body{
     font-size: 20px;
     color: white;
     font-weight: bold;
+    display: flex;
 }
+
+.month_name{
+flex-grow: 1;
+}
+
+.month_head img{
+    height: 25px;
+    background-color: white;
+    flex-grow: 0;
+    cursor: pointer;
+}
+
 
 .win{
     color: darkgreen;
@@ -391,3 +404,25 @@ body{
     color: blueviolet;
     font-weight: bold;
 }
+
+
+.plot_backgraund{
+    z-index: 10;
+    display: none;
+    background-color: darkgray;
+    opacity: 0.5;
+    position: fixed;
+    width: 100vw;
+    height: 101vh;
+}
+
+.plot{
+    position: fixed;
+    margin: auto;
+    width: 1000px;
+    height: 500px;
+    background-color: white;
+    z-index: 20;
+    display: none;
+}
+
