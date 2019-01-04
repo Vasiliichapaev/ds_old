@@ -868,6 +868,9 @@ function make_plot(players_data, month_start){
           responsiveAnimationDuration: 0, // animation duration after a resize
           scales: {
               yAxes: [{
+                  ticks: {
+                    stepSize: 1
+                },
                   scaleLabel: {
                       display: true,
                       labelString: 'Победы',
