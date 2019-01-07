@@ -421,8 +421,9 @@ flex-grow: 1;
     margin: auto;
     width: 1000px;
     height: 500px;
-    background-color: white;
+    background-color: wheat;
     z-index: 20;
     display: none;
+    padding: 10px;
 }
 
