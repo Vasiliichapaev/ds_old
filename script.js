@@ -718,7 +718,8 @@ function month_details_popup(month_games){
     player_month_games.push([hero_img, w, l, winrate]);
   };
 
-  player_month_games.sort((a, b) => b[3]- a[3]);
+  // player_month_games.sort((a, b) => b[3]- a[3]);
+  player_month_games.sort((a, b) => (b[1] + b[2])- (a[1] + a[2]));
 
   for (g in player_month_games){
    
@@ -758,7 +759,7 @@ function month_details_popup(month_games){
     };
   };
 
-  return month_details_container
+  return month_details_container;
 };
 
 
