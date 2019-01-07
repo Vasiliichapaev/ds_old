@@ -691,28 +691,15 @@ function month_details_popup(month_games){
   month_details_head.appendChild(month_wr);
   month_wr.innerHTML = "W/(W+L)"
 
+  var player_month_games = [];
+
   for (hero in month_games){
-    
-    var month_details = document.createElement('div');
-    month_details.classList.add("month_details");
-
-    var month_hero_container = document.createElement('div');
-    month_hero_container.classList.add("month_hero_container");
-
+   
     var hero_img = document.createElement('img');
     var hero_id = month_games[hero][0];
     var games = month_games[hero][1];
     
-
     hero_img.src = "https://api.opendota.com" + heroes[hero_id][1];
-
-    var hero = document.createElement('div');
-    hero.classList.add("hero");
-    hero.appendChild(hero_img);
-
-    month_hero_container.appendChild(hero);
-    month_details.appendChild(month_hero_container);
-    month_details_container.appendChild(month_details);
 
     var w = 0;
     var l = 0;
@@ -728,27 +715,49 @@ function month_details_popup(month_games){
 
     var winrate = w / (l + w);
 
+    player_month_games.push([hero_img, w, l, winrate]);
+  };
+
+  player_month_games.sort((a, b) => b[3]- a[3])
+
+  for (g in player_month_games){
+   
+    var month_details = document.createElement('div');
+    month_details.classList.add("month_details");
+
+    var month_hero_container = document.createElement('div');
+    month_hero_container.classList.add("month_hero_container");
+
+    var hero = document.createElement('div');
+    hero.classList.add("hero");
+    hero.appendChild(player_month_games[g][0]);
+
+    month_hero_container.appendChild(hero);
+    month_details.appendChild(month_hero_container);
+    month_details_container.appendChild(month_details);
+
     var month_w = document.createElement('div');
     month_w.classList.add("month_w");
     month_hero_container.appendChild(month_w);
-    month_w.innerHTML = w
+    month_w.innerHTML = player_month_games[g][1]
   
     var month_l = document.createElement('div');
     month_l.classList.add("month_l");
     month_hero_container.appendChild(month_l);
-    month_l.innerHTML = l
+    month_l.innerHTML = player_month_games[g][2]
   
     var month_wr = document.createElement('div');
     month_wr.classList.add("month_wr");
     month_hero_container.appendChild(month_wr);
-    month_wr.innerHTML = winrate.toFixed(2)
+    month_wr.innerHTML = player_month_games[g][3].toFixed(2)
 
-    if (winrate < 0.5){
+    if (player_month_games[g][3] < 0.5){
       month_wr.classList.add("red");
     }else{
       month_wr.classList.add("green");
     };
   };
+
   return month_details_container
 };
 
