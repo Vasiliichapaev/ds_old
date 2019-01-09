@@ -243,11 +243,10 @@ flex-grow: 1;
     left: 30px;   
     cursor: default;
     display: none; 
-    max-height: 350px;
-    overflow-y: auto;
 }
 
 .game_details{
+    opacity: 1;
     background-color:  rgb(22, 30, 39);
     height: 35px;
     width: 140px;
