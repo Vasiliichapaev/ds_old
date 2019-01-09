@@ -3,13 +3,15 @@ Date.prototype.daysInMonth = function() {
 };
 
 var players = {
-  "Doctaaar": {"id": [254920273, 117990545]},
-  "Neeeeeerf": {"id": [102756891]},
-  "JohnGalt": {"id": [41528404]},
-  "Megabit": {"id": [84502939]},
-  "Alexfov": {"id": [313885294]},
-  "BloOdTerrOr": {"id": [120491980]}
+  "Doctaaar": {"id": [254920273, 117990545], "load": false, "games": []},
+  "Neeeeeerf": {"id": [102756891], "load": false, "games": []},
+  "JohnGalt": {"id": [41528404], "load": false, "games": []},
+  "Megabit": {"id": [84502939], "load": false, "games": []},
+  "Alexfov": {"id": [313885294], "load": false, "games": []},
+  "BloOdTerrOr": {"id": [120491980], "load": false, "games": []}
 };
+
+var players_dta = [];
 
 var heroes = {};
 
@@ -231,50 +233,72 @@ for (var year=now_year; year>=2012; year--){
       wr.classList.add("wr");
       column.appendChild(wr);
     };
-
-    calculation(month_table);
-
-  }
-}
+  };
+};
 
 function heroes_data(){
   var request = new XMLHttpRequest();
-  request.open('GET', 'https://api.opendota.com/api/heroStats', false);
+  request.open('GET', 'https://api.opendota.com/api/heroStats', true);
   request.send();
-  var heroes_json = JSON.parse(request.responseText);
-
-  for (i in heroes_json){
-    heroes[heroes_json[i]["id"]] = [heroes_json[i]["localized_name"], heroes_json[i]["icon"]];
+  request.onreadystatechange = function(e){
+    if(request.readyState === 4 && request.status === 200) {
+      var heroes_json = JSON.parse(request.responseText);
+      for (i in heroes_json){
+        heroes[heroes_json[i]["id"]] = [heroes_json[i]["localized_name"], heroes_json[i]["icon"]];
+      };
+    };
   };
+};
 
+var win_loose = function(game){
+  if (game["radiant_win"] && game["player_slot"] < 6) return true;
+  if (!game["radiant_win"] && game["player_slot"] > 6) return true;
+  return false;
+};
+
+var ranked = function(game){
+  if (game["lobby_type"] == 7) return true;
+  return false;
 };
 
 function players_data(){
   for (player in players){
-    var lst = [];
-    for (g in players[player]["id"]){
-      var request = new XMLHttpRequest();
-      request.open('GET', 'https://api.opendota.com/api/players/' + players[player]["id"][g] + '/matches', false);
+
+    for (let g in players[player]["id"]){
+      let request = new XMLHttpRequest();
+      request.open('GET', 'https://api.opendota.com/api/players/' + players[player]["id"][g] + '/matches', true);
       request.send();
-      var games = JSON.parse(request.responseText);
-      for (i in games){
-        lst.push([games[i]["start_time"], win_loose(i, games), ranked(i, games), games[i]["hero_id"], games[i]["kills"], games[i]["deaths"], games[i]["assists"], games[i]["match_id"]]);
-      }
-    }
-    players[player]["games"] = lst;
-  }
+      let plr = player;
+      request.onreadystatechange = function(e, player){
+        if(request.readyState === 4 && request.status === 200) {
+          let games = JSON.parse(request.responseText);
+          for (let i in games){
+            players[plr]["games"].push([games[i]["start_time"], win_loose(games[i]), ranked(games[i]), games[i]["hero_id"], games[i]["kills"], games[i]["deaths"], games[i]["assists"], games[i]["match_id"]]);
+          };
+          calculation_all()
+        };
+        players[plr]["load"] = true;  
+        
+      };
+    };
+  };
 };
 
-function win_loose(i, games){
-  if (games[i]["radiant_win"] && games[i]["player_slot"] < 6) return true;
-  if (!games[i]["radiant_win"] && games[i]["player_slot"] > 6) return true;
-  return false;
+
+function calculation_all(){
+  let load = true;
+  let month_tables = document.querySelectorAll(".month_table");
+
+  for (player in players){
+    if (!players[player]["load"]) load = false;
+  };
+  if (!load) return;
+
+  for (let indx=0; indx < month_tables.length; indx++){
+    calculation(month_tables[indx])
+  };
 };
 
-function ranked(i, games){
-  if (games[i]["lobby_type"] == 7) return true;
-  return false;
-};
 
 function calculation(month_table) {
   
