@@ -303,7 +303,7 @@ function calculation_all(){
   for (let indx=0; indx < month_tables.length; indx++){
     calculation(month_tables[indx])
   };
-  personal_graphics();
+  setTimeout(personal_graphics(), 200);
 };
 
 

@@ -53,6 +53,8 @@ body{
     user-select: none;  
     display: flex;
     flex-direction: column;
+    /* align-content: center; 
+    justify-content: center;  */
     min-height: 101vh;
     min-width: 1315px;
 }
@@ -439,7 +441,9 @@ flex-grow: 1;
 
 .plot{
     position: fixed;
-    margin: auto;
+    /* margin: auto; */
+    left: 20%;
+    top: 20%;
     width: 1000px;
     height: 500px;
     background-color: wheat;
