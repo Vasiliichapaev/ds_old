@@ -51,42 +51,6 @@ players_data();
 heroes_data();
 construct();
 
-
-let statistics = document.querySelector(".statistics");
-let graphics = document.querySelector(".graphics");
-
-graphics.addEventListener('click',function(e){
-  if (this.classList.contains("cristal")){
-    this.classList.remove("cristal");
-    this.classList.add("lina");
-
-    let board = document.querySelector(".board");
-    board.style.display = 'none';
-
-    let plots_container = document.querySelector(".plots_container");
-    plots_container.style.display = 'flex';
-
-    statistics.classList.remove("lina");
-    statistics.classList.add("cristal");
-  };
-});
-
-statistics.addEventListener('click',function(e){
-  if (this.classList.contains("cristal")){
-    this.classList.remove("cristal");
-    this.classList.add("lina");
-
-    let board = document.querySelector(".board");
-    board.style.display = 'flex';
-
-    let plots_container = document.querySelector(".plots_container");
-    plots_container.style.display = 'none';
-
-    graphics.classList.remove("lina");
-    graphics.classList.add("cristal");
-  };
-});
-
 function construct(){
 
   for (var year=now_year; year>=2012; year--){
@@ -1087,4 +1051,40 @@ function personal_graphics(){
   
   
   };
+
+  let statistics = document.querySelector(".statistics");
+  let graphics = document.querySelector(".graphics");
+
+  graphics.addEventListener('click',function(e){
+    if (this.classList.contains("cristal")){
+      this.classList.remove("cristal");
+      this.classList.add("lina");
+
+      let board = document.querySelector(".board");
+      board.style.display = 'none';
+
+      let plots_container = document.querySelector(".plots_container");
+      plots_container.style.display = 'flex';
+
+      statistics.classList.remove("lina");
+      statistics.classList.add("cristal");
+    };
+  });
+
+  statistics.addEventListener('click',function(e){
+    if (this.classList.contains("cristal")){
+      this.classList.remove("cristal");
+      this.classList.add("lina");
+
+      let board = document.querySelector(".board");
+      board.style.display = 'flex';
+
+      let plots_container = document.querySelector(".plots_container");
+      plots_container.style.display = 'none';
+
+      graphics.classList.remove("lina");
+      graphics.classList.add("cristal");
+    };
+  });
+
 };
