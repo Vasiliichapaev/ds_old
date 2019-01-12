@@ -1054,16 +1054,14 @@ function personal_graphics(){
 
   let statistics = document.querySelector(".statistics");
   let graphics = document.querySelector(".graphics");
+  let board = document.querySelector(".board");
 
   graphics.addEventListener('click',function(e){
     if (this.classList.contains("cristal")){
       this.classList.remove("cristal");
       this.classList.add("lina");
-
-      let board = document.querySelector(".board");
+     
       board.style.display = 'none';
-
-      let plots_container = document.querySelector(".plots_container");
       plots_container.style.display = 'flex';
 
       statistics.classList.remove("lina");
@@ -1076,15 +1074,15 @@ function personal_graphics(){
       this.classList.remove("cristal");
       this.classList.add("lina");
 
-      let board = document.querySelector(".board");
-      board.style.display = 'flex';
-
-      let plots_container = document.querySelector(".plots_container");
+      board.style.display = 'flex';     
       plots_container.style.display = 'none';
 
       graphics.classList.remove("lina");
       graphics.classList.add("cristal");
     };
   });
+
+  plots_container.style.visibility = 'visible';
+  plots_container.style.display = 'none';
 
 };
