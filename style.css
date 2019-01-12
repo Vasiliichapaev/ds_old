@@ -52,19 +52,40 @@ body{
     -ms-user-select: none;    
     user-select: none;  
     display: flex;
-    align-items: center;
-    align-content: center; 
-    justify-content: center; 
+    flex-direction: column;
     min-height: 101vh;
     min-width: 1315px;
 }
 
+.content{
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    align-content: center; 
+    justify-content: center; 
+    flex-direction: column;
+}
+
+.header{
+    height: 100px;
+    display: flex;
+}   
+
+.header div{
+    margin: auto;
+    font-size: 30px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.footer{
+    /* border-top: solid 2px #c96026; */
+    height: 100px;
+}
+
 .board{
-    position: absolute;
-    margin-left: auto;
-    margin-right: auto;
-    /* left: 50px; */
-    top: 50px;
+    position: relative;
+    flex-direction: column;
 }
 
 .year_table{
@@ -425,5 +446,49 @@ flex-grow: 1;
     z-index: 20;
     display: none;
     padding: 10px;
+}
+
+.cristal{
+    color: #2b8ef4;
+}
+
+.lina{
+    color: #ba2c31;
+}
+
+
+
+.plots_container{
+
+	display: none;
+	flex-direction: column;
+	align-items: center;
+    align-content: center; 
+    justify-content: center; 
+	width: 100%;
+}
+
+.plot_container{
+	margin-top: 30px;
+	/* border: solid red 1px; */
+	height: 600px;
+	width: 90%;
+	background-color: lemonchiffon;
+}
+
+.plot_head{
+	width: 100%;
+	text-align: center;
+	padding-top: 10px;
+	height: 20px;
+}
+
+.plot_body{
+	overflow-x: scroll;
+	height: 570px;
+}
+
+.indev_plot{
+	padding: 10px;
 }
 

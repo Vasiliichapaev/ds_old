@@ -31,9 +31,6 @@ var months = ["Январь",
 var ranked_calc = true;
 var unranked_calc = true;
 
-players_data();
-heroes_data();
-
 var now = new Date();
 var now_year = now.getFullYear();
 var now_month = now.getMonth();
@@ -50,191 +47,236 @@ var plot = document.querySelector('.plot');
 var plot_backgraund = document.querySelector('.plot_backgraund');
 plot_backgraund.addEventListener("click", plot_down);
 
-
-for (var year=now_year; year>=2012; year--){
-
-  var year_table = document.createElement('div');
-
-  year_table.classList.add("year_table");
-  if (year != now_year) year_table.classList.add("minimize");
-  board.appendChild(year_table);
-
-  var year_head = document.createElement('div');
-  year_head.classList.add("year_head");
-  year_head.addEventListener('click', mini_year);
-
-  var year_number = document.createElement('div');
-  year_number.classList.add("year_number");
-  year_number.innerHTML = year;
-  year_head.appendChild(year_number);
-
-  year_table.appendChild(year_head);
-
-  var year_end = 11;
-  if (now_month < 11 && year == now_year) year_end = now_month;
-
-  for (month=year_end; month>=0; month--){
-    var month_table = document.createElement('div');
-
-    month_table.classList.add("month_table");
-    var month_start = new Date(year, month)/1000;
-    month_table.attributes["start_time"] = month_start;
-    year_table.appendChild(month_table);
-
-    var month_head = document.createElement('div');
-    month_head.classList.add("month_head");
-    month_table.appendChild(month_head);
-
-    var month_name = document.createElement('div');
-    month_name.classList.add("month_name");
-    month_name.innerHTML = months[month];
-    month_head.appendChild(month_name);
+players_data();
+heroes_data();
+construct();
 
 
-    var plot_img = document.createElement('img');
-    plot_img.src = "plot.png"
-    month_head.appendChild(plot_img);
-    plot_img.addEventListener("click", plot_up)
+let statistics = document.querySelector(".statistics");
+let graphics = document.querySelector(".graphics");
 
+graphics.addEventListener('click',function(e){
+  if (this.classList.contains("cristal")){
+    this.classList.remove("cristal");
+    this.classList.add("lina");
 
-    var row = document.createElement('div');
-    row.classList.add("row");
-    month_table.appendChild(row);
+    let board = document.querySelector(".board");
+    board.style.display = 'none';
 
+    let plots_container = document.querySelector(".plots_container");
+    plots_container.style.display = 'flex';
 
-    var column = document.createElement('div');
-    column.classList.add("column", "border_right");
-    var cell = document.createElement('div');
-    cell.classList.add("player_name", "border_bottom");
-    var player_name_head = document.createElement('div');
-    player_name_head.classList.add("player_name_head");
-    player_name_head.innerHTML = "Игроки";
-    player_name_head.addEventListener('click', all_players);
-    player_name_head.attributes["players"] = [];
-    for (player in players){
-      player_name_head.attributes["players"].push(player);
-    };
-    cell.appendChild(player_name_head);
+    statistics.classList.remove("lina");
+    statistics.classList.add("cristal");
+  };
+});
 
-    var ranked = document.createElement('div');
-    ranked.classList.add("ranked");
-    ranked.innerHTML = "Р";
-    ranked.addEventListener('click', ranked_games);
-    cell.appendChild(ranked);
+statistics.addEventListener('click',function(e){
+  if (this.classList.contains("cristal")){
+    this.classList.remove("cristal");
+    this.classList.add("lina");
 
-    var unranked = document.createElement('div');
-    unranked.classList.add("ranked");
-    unranked.innerHTML = "О";
-    unranked.addEventListener('click', unranked_games);
-    cell.appendChild(unranked);
+    let board = document.querySelector(".board");
+    board.style.display = 'flex';
 
+    let plots_container = document.querySelector(".plots_container");
+    plots_container.style.display = 'none';
 
+    graphics.classList.remove("lina");
+    graphics.classList.add("cristal");
+  };
+});
 
-    column.appendChild(cell);
-    row.appendChild(column);
+function construct(){
 
-    for (player in players){
+  for (var year=now_year; year>=2012; year--){
+
+    var year_table = document.createElement('div');
+  
+    year_table.classList.add("year_table");
+    if (year != now_year) year_table.classList.add("minimize");
+    board.appendChild(year_table);
+  
+    var year_head = document.createElement('div');
+    year_head.classList.add("year_head");
+    year_head.addEventListener('click', mini_year);
+  
+    var year_number = document.createElement('div');
+    year_number.classList.add("year_number");
+    year_number.innerHTML = year;
+    year_head.appendChild(year_number);
+  
+    year_table.appendChild(year_head);
+  
+    var year_end = 11;
+    if (now_month < 11 && year == now_year) year_end = now_month;
+  
+    for (month=year_end; month>=0; month--){
+      var month_table = document.createElement('div');
+  
+      month_table.classList.add("month_table");
+      var month_start = new Date(year, month)/1000;
+      month_table.attributes["start_time"] = month_start;
+      year_table.appendChild(month_table);
+  
+      var month_head = document.createElement('div');
+      month_head.classList.add("month_head");
+      month_table.appendChild(month_head);
+  
+      var month_name = document.createElement('div');
+      month_name.classList.add("month_name");
+      month_name.innerHTML = months[month];
+      month_head.appendChild(month_name);
+  
+  
+      var plot_img = document.createElement('img');
+      plot_img.src = "plot.png"
+      month_head.appendChild(plot_img);
+      plot_img.addEventListener("click", plot_up)
+  
+  
+      var row = document.createElement('div');
+      row.classList.add("row");
+      month_table.appendChild(row);
+  
+  
+      var column = document.createElement('div');
+      column.classList.add("column", "border_right");
       var cell = document.createElement('div');
-      cell.classList.add("player_name");
-      column.appendChild(cell);
-
-      var player_name_container = document.createElement('div');
-      player_name_container.classList.add("player_name_container");
-      player_name_container.innerHTML = player;
-      player_name_container.addEventListener('click', toggle);
-      cell.appendChild(player_name_container);
-    };
-
-
-    for (day=1; day<=new Date(year, month).daysInMonth(); day++){
-      var day_colymn = document.createElement('div');
-      day_colymn.classList.add("day_colymn");
-      row.appendChild(day_colymn);
-
-      var cell = document.createElement('div');
-      cell.classList.add("cell", "border_bottom");
-      var day_number = document.createElement('div');
-      day_number.classList.add("day_number");
-      day_number.innerHTML = day;
-
-      this_seconds = new Date(year, month, day) / 1000;
-
-      if (this_seconds == now_seconds){
-        day_number.classList.add("day_number", "this_day");
+      cell.classList.add("player_name", "border_bottom");
+      var player_name_head = document.createElement('div');
+      player_name_head.classList.add("player_name_head");
+      player_name_head.innerHTML = "Игроки";
+      player_name_head.addEventListener('click', all_players);
+      player_name_head.attributes["players"] = [];
+      for (player in players){
+        player_name_head.attributes["players"].push(player);
       };
-
-
-
-      cell.appendChild(day_number);
-      day_colymn.appendChild(cell);
-
+      cell.appendChild(player_name_head);
+  
+      var ranked = document.createElement('div');
+      ranked.classList.add("ranked");
+      ranked.innerHTML = "Р";
+      ranked.addEventListener('click', ranked_games);
+      cell.appendChild(ranked);
+  
+      var unranked = document.createElement('div');
+      unranked.classList.add("ranked");
+      unranked.innerHTML = "О";
+      unranked.addEventListener('click', unranked_games);
+      cell.appendChild(unranked);
+  
+  
+  
+      column.appendChild(cell);
+      row.appendChild(column);
+  
       for (player in players){
         var cell = document.createElement('div');
-        cell.classList.add("cell");
-        day_colymn.appendChild(cell);
+        cell.classList.add("player_name");
+        column.appendChild(cell);
+  
+        var player_name_container = document.createElement('div');
+        player_name_container.classList.add("player_name_container");
+        player_name_container.innerHTML = player;
+        player_name_container.addEventListener('click', toggle);
+        cell.appendChild(player_name_container);
       };
-    };
-
-    var column = document.createElement('div');
-    column.classList.add("column", "border_left");
-    row.appendChild(column);
-
-    var cell = document.createElement('div');
-    cell.classList.add("cell", "border_bottom");
-    column.appendChild(cell);
-
-    var day_number = document.createElement('div');
-    day_number.classList.add("day_number");
-    day_number.innerHTML = "W";
-    cell.appendChild(day_number);
-
-    for (player in players) {
+  
+  
+      for (day=1; day<=new Date(year, month).daysInMonth(); day++){
+        var day_colymn = document.createElement('div');
+        day_colymn.classList.add("day_colymn");
+        row.appendChild(day_colymn);
+  
+        var cell = document.createElement('div');
+        cell.classList.add("cell", "border_bottom");
+        var day_number = document.createElement('div');
+        day_number.classList.add("day_number");
+        day_number.innerHTML = day;
+  
+        this_seconds = new Date(year, month, day) / 1000;
+  
+        if (this_seconds == now_seconds){
+          day_number.classList.add("day_number", "this_day");
+        };
+  
+  
+  
+        cell.appendChild(day_number);
+        day_colymn.appendChild(cell);
+  
+        for (player in players){
+          var cell = document.createElement('div');
+          cell.classList.add("cell");
+          day_colymn.appendChild(cell);
+        };
+      };
+  
+      var column = document.createElement('div');
+      column.classList.add("column", "border_left");
+      row.appendChild(column);
+  
       var cell = document.createElement('div');
-      cell.classList.add("cell");
+      cell.classList.add("cell", "border_bottom");
       column.appendChild(cell);
-    }
-
-
-    var column = document.createElement('div');
-    column.classList.add("column");
-    row.appendChild(column);
-
-    var cell = document.createElement('div');
-    cell.classList.add("cell", "border_bottom");
-    column.appendChild(cell);
-
-    var day_number = document.createElement('div');
-    day_number.classList.add("day_number");
-    day_number.innerHTML = "L";
-    cell.appendChild(day_number);
-
-    for (player in players) {
+  
+      var day_number = document.createElement('div');
+      day_number.classList.add("day_number");
+      day_number.innerHTML = "W";
+      cell.appendChild(day_number);
+  
+      for (player in players) {
+        var cell = document.createElement('div');
+        cell.classList.add("cell");
+        column.appendChild(cell);
+      }
+  
+  
+      var column = document.createElement('div');
+      column.classList.add("column");
+      row.appendChild(column);
+  
       var cell = document.createElement('div');
-      cell.classList.add("cell");
+      cell.classList.add("cell", "border_bottom");
       column.appendChild(cell);
-    };
-
-
-    var column = document.createElement('div');
-    column.classList.add("column");
-    row.appendChild(column);
-
-    var wr = document.createElement('div');
-    wr.classList.add("wr", "border_bottom");
-    column.appendChild(wr);
-
-    var wr_container = document.createElement('div');
-    wr_container.classList.add("wr_container");
-    wr_container.innerHTML = "W/(W+L)";
-    wr.appendChild(wr_container);
-
-    for (player in players) {
+  
+      var day_number = document.createElement('div');
+      day_number.classList.add("day_number");
+      day_number.innerHTML = "L";
+      cell.appendChild(day_number);
+  
+      for (player in players) {
+        var cell = document.createElement('div');
+        cell.classList.add("cell");
+        column.appendChild(cell);
+      };
+  
+  
+      var column = document.createElement('div');
+      column.classList.add("column");
+      row.appendChild(column);
+  
       var wr = document.createElement('div');
-      wr.classList.add("wr");
+      wr.classList.add("wr", "border_bottom");
       column.appendChild(wr);
+  
+      var wr_container = document.createElement('div');
+      wr_container.classList.add("wr_container");
+      wr_container.innerHTML = "W/(W+L)";
+      wr.appendChild(wr_container);
+  
+      for (player in players) {
+        var wr = document.createElement('div');
+        wr.classList.add("wr");
+        column.appendChild(wr);
+      };
     };
   };
 };
+
+
+
 
 function heroes_data(){
   var request = new XMLHttpRequest();
@@ -297,6 +339,7 @@ function calculation_all(){
   for (let indx=0; indx < month_tables.length; indx++){
     calculation(month_tables[indx])
   };
+  personal_graphics();
 };
 
 
@@ -719,9 +762,9 @@ function month_details_popup(month_games){
 
   for (hero in month_games){
    
-    var hero_img = document.createElement('img');
-    var hero_id = month_games[hero][0];
-    var games = month_games[hero][1];
+    let hero_img = document.createElement('img');
+    let hero_id = month_games[hero][0];
+    let games = month_games[hero][1];
     
     hero_img.src = "https://api.opendota.com" + heroes[hero_id][1];
 
@@ -866,7 +909,7 @@ function make_plot(players_data, month_start){
   };
   
 
-  var myChart = new Chart(ctx, {
+  let myChart = new Chart(ctx, {
       type: 'line',
       data: {
           labels: labels,
@@ -917,4 +960,131 @@ function make_plot(players_data, month_start){
   });
 
   return ctx;
+};
+
+
+
+function personal_graphics(){
+
+  const colors = ['green', 'red'];
+  const plots_container = document.querySelector('.plots_container');
+  
+  for (player in players){
+      let wins = 0;
+      let games = players[player]['games'].slice(0, players[player]['games'].length);
+      games.reverse();
+      let plot_width = games.length * 4 + 10 + 'px';
+      let datasets = [];
+  
+      let plot_container = document.createElement('div');
+      plot_container.classList.add("plot_container");
+      plots_container.appendChild(plot_container);
+  
+      let plot_head = document.createElement('div');
+      plot_head.classList.add("plot_head");
+      plot_head.innerHTML = player
+      plot_container.appendChild(plot_head);
+  
+      let plot_body = document.createElement('div');
+      plot_body.classList.add("plot_body");
+      plot_container.appendChild(plot_body);
+      
+      let indev_plot = document.createElement('div');
+      indev_plot.classList.add("indev_plot");
+      indev_plot.style.width = plot_width;
+      plot_body.appendChild(indev_plot);
+      
+      let ctx = document.createElement('canvas');
+      ctx.style.width = plot_width;
+      ctx.style.height = '500px'
+      indev_plot.appendChild(ctx);
+  
+      for (let i=0; i < games.length ; i++){
+          let clr = 0;
+      
+          if (games[i][1]){
+              wins++;
+              clr = 0;
+          }else{
+              wins--;
+              clr = 1;
+          };
+      
+          let point = [{
+              x: i+1,
+              y: wins
+          }];
+         
+      
+          let params = {
+              data: point,
+              backgroundColor: [colors[clr]],
+              borderColor: [colors[clr]],
+          };
+          datasets.push(params);
+      };
+  
+  
+      let myChart = new Chart(ctx, {
+          type: 'scatter',
+          data: {
+              datasets: datasets
+          },
+          options: {
+              tooltips: {
+                  enabled: true,
+                  // backgroundColor: 'red',
+                  callbacks: {
+                      title: function(tooltipItem, d) {
+                          let indx = tooltipItem[0].datasetIndex - 1;
+                          let dte = new Date(games[indx+1][0]*1000)
+                          return dte.getDate() +" "+ (dte.getMonth()+1) +" "+ dte.getFullYear()
+                      },
+                      label: function(tooltipItem) {
+                          return tooltipItem.xLabel + ";" + tooltipItem.yLabel
+                      },
+                  },
+              },
+              elements: {
+                  point: {
+                      radius: 2,
+                      hoverRadius: 2
+                    }
+              },
+              legend: {
+                  display: false,
+              },
+              animation: {
+                  duration: 0, // general animation time
+              },
+              hover: {
+                  animationDuration: 0, // duration of animations when hovering an item
+              },
+              responsiveAnimationDuration: 0, // animation duration after a resize
+              scales: {
+                  yAxes: [{
+                      position: 'right',
+                      scaleLabel: {
+                          display: true,
+                          labelString: 'Победы',
+                          fontSize: 15
+                      },
+                  }],
+                  // yAxes: [{
+                  //     position: 'left',
+                  // }],
+                  xAxes: [{
+                      display: false,
+                      ticks: {
+                          max: games.length + 5,
+                        
+                      //   display: false,
+                    },
+                    },],
+              }
+          }
+      });
+  
+  
+  };
 };
