@@ -931,7 +931,7 @@ function make_plot(players_data, month_start){
 function personal_graphics(){
 
   const colors = ['green', 'red'];
-  const plots_container = document.querySelector('.plots_container');
+  let plots_container = document.querySelector('.plots_container');
   
   for (player in players){
       let wins = 0;

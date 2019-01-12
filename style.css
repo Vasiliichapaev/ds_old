@@ -460,10 +460,7 @@ flex-grow: 1;
     color: #ba2c31;
 }
 
-
-
 .plots_container{
-
 	display: none;
 	flex-direction: column;
 	align-items: center;
