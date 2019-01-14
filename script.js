@@ -256,19 +256,27 @@ function heroes_data(){
   };
 };
 
-var win_loose = function(game){
+win_loose = function(game){
   if (game["radiant_win"] && game["player_slot"] < 6) return true;
   if (!game["radiant_win"] && game["player_slot"] > 6) return true;
   return false;
 };
 
-var ranked = function(game){
+ranked = function(game){
   if (game["lobby_type"] == 7) return true;
   return false;
 };
 
+players_data_load = () => {
+  for (let player in players){
+    if (!players[player]['load']) return false;
+  };
+  return true;
+};
+
+
 function players_data(){
-  for (player in players){
+  for (let player in players){
 
     for (let g in players[player]["id"]){
       let request = new XMLHttpRequest();
@@ -280,30 +288,27 @@ function players_data(){
           let games = JSON.parse(request.responseText);
           for (let i in games){
             players[plr]["games"].push([games[i]["start_time"], win_loose(games[i]), ranked(games[i]), games[i]["hero_id"], games[i]["kills"], games[i]["deaths"], games[i]["assists"], games[i]["match_id"]]);
+          };         
+          players[plr]["load"] = true;  
+          if (players_data_load()){
+            calculation_all();
           };
-          calculation_all()
         };
-        players[plr]["load"] = true;  
-        
       };
     };
   };
 };
 
 
-function calculation_all(){
-  let load = true;
-  let month_tables = document.querySelectorAll(".month_table");
 
-  for (player in players){
-    if (!players[player]["load"]) load = false;
-  };
-  if (!load) return;
+
+function calculation_all(){
+  let month_tables = document.querySelectorAll(".month_table");
 
   for (let indx=0; indx < month_tables.length; indx++){
     calculation(month_tables[indx])
   };
-  setTimeout(personal_graphics(), 200);
+  personal_graphics();
 };
 
 
@@ -1000,11 +1005,11 @@ function personal_graphics(){
                   // backgroundColor: 'red',
                   callbacks: {
                       title: function(tooltipItem, d) {
-                          let indx = tooltipItem[0].datasetIndex - 1;
-                          let dte = new Date(games[indx+1][0]*1000)
-                          return dte.getDate() +" "+ (dte.getMonth()+1) +" "+ dte.getFullYear()
+                          let indx = tooltipItem[0].datasetIndex;
+                          let dte = new Date(games[indx][0]*1000)
+                          return dte.getDate() +"-"+ (dte.getMonth()+1) +"-"+ dte.getFullYear()
                       },
-                      label: function(tooltipItem) {
+                      label: function(tooltipItem, d) {
                           return tooltipItem.xLabel + ";" + tooltipItem.yLabel
                       },
                   },
