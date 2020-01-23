@@ -251,7 +251,7 @@ function heroes_data() {
         if (request.readyState === 4 && request.status === 200) {
             var heroes_json = JSON.parse(request.responseText);
             for (i in heroes_json) {
-                heroes[heroes_json[i]["id"]] = [heroes_json[i]["localized_name"], heroes_json[i]["icon"]];
+                heroes[heroes_json[i]["id"]] = [heroes_json[i]["localized_name"], heroes_json[i]["img"]];
             };
         };
     };
