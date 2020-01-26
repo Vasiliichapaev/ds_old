@@ -1,56 +1,137 @@
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
 }
 body {
-	line-height: 1;
+    line-height: 1;
 }
-ol, ul {
-	list-style: none;
+ol,
+ul {
+    list-style: none;
 }
-blockquote, q {
-	quotes: none;
+blockquote,
+q {
+    quotes: none;
 }
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: "";
+    content: none;
 }
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
 }
 
-body{
+body {
     background-image: url("rak.jpg");
     background-attachment: fixed;
     background-size: 100%;
     font-family: Arial, Helvetica, sans-serif;
-    -webkit-user-select: none;  
-    -moz-user-select: none;   
-    -ms-user-select: none;    
-    user-select: none;  
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     display: flex;
     flex-direction: column;
     /* align-content: center; 
@@ -59,56 +140,54 @@ body{
     min-width: 1315px;
 }
 
-.content{
+.content {
     flex-grow: 1;
     display: flex;
     align-items: center;
-    align-content: center; 
-    justify-content: center; 
+    align-content: center;
+    justify-content: center;
     flex-direction: column;
 }
 
-.header{
+.header {
     height: 100px;
     display: flex;
-}   
+}
 
-.header div{
+.header div {
     margin: auto;
     font-size: 30px;
     cursor: pointer;
     font-weight: bold;
 }
 
-.footer{
+.footer {
     /* border-top: solid 2px #c96026; */
     height: 100px;
 }
 
-.board{
+.board {
     position: relative;
     flex-direction: column;
 }
 
-.year_table{
-    border:solid transparent 1px;
+.year_table {
+    border: solid transparent 1px;
     margin-bottom: 20px;
     width: 1315px;
     border-radius: 15px 15px 0 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    align-content: center; 
-    justify-content: center; 
+    align-content: center;
+    justify-content: center;
 }
 
-.minimize{
+.minimize {
     border-radius: 15px;
 }
 
-
-
-.year_head{
+.year_head {
     height: 40px;
     text-align: center;
     font-size: 30px;
@@ -118,24 +197,24 @@ body{
     cursor: pointer;
 }
 
-.year_number{
+.year_number {
     margin: auto;
 }
 
-.month_table{
+.month_table {
     background-color: #1e5bab;
     margin-bottom: 30px;
     margin-left: 30px;
-    border-right:solid 1px;
-    display: table; 
+    border-right: solid 1px;
+    display: table;
     opacity: 0.85;
 }
 
-.row{
+.row {
     display: flex;
 }
 
-.cell{
+.cell {
     background-color: rgb(255, 247, 232);
     width: 30px;
     height: 28px;
@@ -146,7 +225,7 @@ body{
     margin-bottom: 1px;
 }
 
-.player_name{
+.player_name {
     background-color: rgb(255, 247, 232);
     width: 120px;
     height: 28px;
@@ -157,18 +236,17 @@ body{
     display: flex;
 }
 
-.player_name_head{
+.player_name_head {
     margin: auto;
     cursor: pointer;
 }
 
-.player_name_container{
+.player_name_container {
     margin-top: 5px;
     cursor: pointer;
 }
 
-
-.wr{
+.wr {
     background-color: rgb(255, 247, 232);
     width: 90px;
     height: 28px;
@@ -179,26 +257,23 @@ body{
     display: flex;
 }
 
-.wr_container{
+.wr_container {
     margin: auto;
 }
 
-
-
-.border_left{
+.border_left {
     border-left: solid 1px #1e5bab;
 }
 
-.border_right{
+.border_right {
     border-right: solid 1px #1e5bab;
 }
 
-.border_bottom{
+.border_bottom {
     border-bottom: solid 1px #1e5bab;
 }
 
-
-.month_head{
+.month_head {
     height: 25px;
     text-align: center;
     font-size: 20px;
@@ -207,93 +282,89 @@ body{
     display: flex;
 }
 
-.month_name{
-flex-grow: 1;
+.month_name {
+    flex-grow: 1;
 }
 
-.month_head img{
+.month_head img {
     height: 25px;
     background-color: white;
     flex-grow: 0;
     cursor: pointer;
 }
 
-
-.win{
+.win {
     color: darkgreen;
     margin: auto;
 }
 
-.loose{
+.loose {
     color: red;
     margin: auto;
 }
 
-.day_number{
+.day_number {
     margin: auto;
 }
 
-.not_calc{
+.not_calc {
     color: darkgrey;
 }
 
-.minimize .month_table{
+.minimize .month_table {
     display: none;
 }
 
-
-.ranked{
+.ranked {
     cursor: pointer;
     border-left: solid 2px #1e5bab;
     padding: 4px;
 }
 
-.pointer{
+.pointer {
     cursor: pointer;
 }
 
-.popup{
+.popup {
     /* opacity: 0; */
     position: absolute;
-    display: none; 
+    display: none;
     cursor: pointer;
     /* background-color: red; */
 }
 
-.details_container{
-    background-color:  rgb(59, 65, 77);
+.details_container {
+    background-color: rgb(59, 65, 77);
     position: absolute;
-    left: 30px;   
+    left: 30px;
     cursor: default;
-    display: none; 
+    display: none;
 }
 
-
-.game_details{
+.game_details {
     opacity: 1;
-    background-color:  rgb(22, 30, 39);
+    background-color: rgb(22, 30, 39);
     height: 35px;
     width: 140px;
     margin-top: 5px;
 }
 
-.game_details:hover{
-    background-color:  rgb(71, 80, 80);
+.game_details:hover {
+    background-color: rgb(71, 80, 80);
 }
 
-.details_head{
+.details_head {
     opacity: 1;
     display: flex;
     color: white;
 }
 
-
-.hero_head{
+.hero_head {
     height: 20px;
     width: 30px;
 }
 
-.kda{
+.kda {
     height: 25px;
     width: 30px;
     padding-top: 10px;
@@ -301,7 +372,7 @@ flex-grow: 1;
     text-align: center;
 }
 
-.kda_head{
+.kda_head {
     height: 20px;
     width: 30px;
     padding-top: 10px;
@@ -309,11 +380,11 @@ flex-grow: 1;
     text-align: center;
 }
 
-.hero_container{
+.hero_container {
     display: flex;
 }
 
-.hero_name{
+.hero_name {
     position: absolute;
     left: 30px;
     top: -10px;
@@ -324,112 +395,109 @@ flex-grow: 1;
     display: none;
 }
 
-.hero{
+.hero {
     width: 30px;
     height: 30px;
     display: flex;
 }
 
-
-.hero img{
+.hero img {
     width: 32px;
     height: 26px;
     margin: auto;
 }
 
-.red{
+.red {
     color: red;
 }
 
-.green{
+.green {
     color: green;
 }
 
-.white{
+.white {
     color: white;
 }
 
-.hero_container a{
+.hero_container a {
     display: block;
-    height: 30px; 
+    height: 30px;
     position: absolute;
     width: 100%;
 }
 
-.month_details_container{
-    display: none; 
+.month_details_container {
+    display: none;
     position: absolute;
     width: 175px;
     left: -160px;
-    background-color:  rgb(59, 65, 77);
+    background-color: rgb(59, 65, 77);
     max-height: 300px;
     overflow-y: auto;
     cursor: default;
-}   
+}
 
-.month_details_head{
+.month_details_head {
     display: flex;
     text-align: center;
 }
 
-.month_hero_head{
+.month_hero_head {
     height: 20px;
     width: 30px;
 }
 
-.month_w{
+.month_w {
     height: 20px;
     width: 30px;
     margin-top: 5px;
     color: green;
 }
 
-.month_l{
+.month_l {
     height: 20px;
     width: 30px;
     margin-top: 5px;
     color: red;
 }
 
-.month_wr{
+.month_wr {
     height: 20px;
     width: 70px;
     margin-top: 5px;
     /* color: white; */
 }
 
-.month_details{
+.month_details {
     opacity: 1;
     display: flex;
     text-align: center;
-    background-color:  rgb(22, 30, 39);
+    background-color: rgb(22, 30, 39);
     margin-top: 4px;
 }
 
-.month_hero_container{
+.month_hero_container {
     display: flex;
 }
 
-.hero{
+.hero {
     width: 30px;
     height: 30px;
     display: flex;
 }
 
-
-.hero img{
+.hero img {
     width: 32px;
     height: 26px;
     margin: auto;
 }
 
-.this_day{
+.this_day {
     color: blueviolet;
     font-weight: bold;
 }
 
-
-.plot_backgraund{
+.plot_backgraund {
     z-index: 10;
     display: none;
     background-color: darkgray;
@@ -439,58 +507,57 @@ flex-grow: 1;
     height: 101%;
 }
 
-.plot{
+.plot {
     position: fixed;
     /* margin: auto; */
     left: 20%;
     top: 20%;
     width: 1000px;
     height: 500px;
-    background-color: wheat;
+    background-color: #e6e5ed;
     z-index: 20;
     display: none;
     padding: 10px;
 }
 
-.cristal{
+.cristal {
     color: #2b8ef4;
 }
 
-.lina{
+.lina {
     color: #ba2c31;
 }
 
-.plots_container{
+.plots_container {
     visibility: hidden;
     display: flex;
-	flex-direction: column;
-	align-items: center;
-    align-content: center; 
-    justify-content: center; 
-	width: 100%;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    width: 100%;
 }
 
-.plot_container{
-	margin-top: 30px;
-	/* border: solid red 1px; */
-	height: 600px;
-	width: 90%;
-	background-color: lemonchiffon;
+.plot_container {
+    margin-top: 30px;
+    /* border: solid red 1px; */
+    height: 600px;
+    width: 90%;
+    background-color: #e6e5ed;
 }
 
-.plot_head{
-	width: 100%;
-	text-align: center;
-	padding-top: 10px;
-	height: 20px;
+.plot_head {
+    width: 100%;
+    text-align: center;
+    padding-top: 10px;
+    height: 20px;
 }
 
-.plot_body{
-	overflow-x: scroll;
-	height: 570px;
+.plot_body {
+    overflow-x: scroll;
+    height: 570px;
 }
 
-.indev_plot{
-	padding: 10px;
+.indev_plot {
+    padding: 10px;
 }
-
